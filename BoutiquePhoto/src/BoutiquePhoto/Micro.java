@@ -1,5 +1,5 @@
 package BoutiquePhoto;
 
-public class Micro {
+public class Micro extends Article{
 
 }
