@@ -23,7 +23,18 @@ public class Magasin {
 		
 	}
 	
+	public int CalculerMontant()
+	{
+		
+		return 0;
+	}
+	
 	public void Archiver()
+	{
+		
+	}
+	
+	public void EnregistrerLocationConclue()
 	{
 		
 	}
