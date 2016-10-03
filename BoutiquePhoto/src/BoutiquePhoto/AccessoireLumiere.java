@@ -1,5 +1,9 @@
 package BoutiquePhoto;
 
-public class AccessoireLumiere {
+public class AccessoireLumiere extends Article {
+	
+	public AccessoireLumiere() {
+		super();
+	}
 
 }
