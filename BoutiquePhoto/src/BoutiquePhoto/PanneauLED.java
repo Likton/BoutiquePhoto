@@ -1,5 +1,5 @@
 package BoutiquePhoto;
 
-public class PanneauLED {
+public class PanneauLED extends AccessoireLumiere {
 
 }
