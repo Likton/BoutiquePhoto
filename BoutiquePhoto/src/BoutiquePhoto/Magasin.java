@@ -17,4 +17,16 @@ public class Magasin {
 	public void setsNomGerant(String sNomGerant) {
 		this.sNomGerant = sNomGerant;
 	}
+	
+	public void AfficherLocationsEnCours() 
+	{
+		
+	}
+	
+	public void Archiver()
+	{
+		
+	}
+	
+	
 }
