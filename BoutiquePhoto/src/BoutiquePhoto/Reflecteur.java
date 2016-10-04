@@ -25,8 +25,9 @@ public class Reflecteur extends AccessoireLumiere {
 
 	// Constructeur
 	
-	public Reflecteur(int pTailleX, int pTailleY) {
-		super();
+	public Reflecteur(int pReference, int pNbStock, String pMarque, String pIntitule, double pPrixParJour,
+			int pTailleX, int pTailleY) {
+		super(pReference, pNbStock, pMarque, pIntitule, pPrixParJour);
 		this.nTailleX = pTailleX;
 		this.nTailleY = pTailleY;
 	}

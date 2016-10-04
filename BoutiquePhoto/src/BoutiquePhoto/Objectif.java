@@ -2,7 +2,7 @@ package BoutiquePhoto;
 
 import java.util.TreeSet;
 
-public class Objectif {
+public class Objectif extends Article {
 
 	// Attribut
 	
@@ -20,8 +20,9 @@ public class Objectif {
 	
 	// Constructeur
 	
-	public Objectif(TreeSet<String> pLappPhoto) {
-		super();
+	public Objectif(int pReference, int pNbStock, String pMarque, String pIntitule, double pPrixParJour,
+			TreeSet<String> pLappPhoto) {
+		super(pReference, pNbStock, pMarque, pIntitule, pPrixParJour);
 		this.lAppPhoto = pLappPhoto;
 	}
 }

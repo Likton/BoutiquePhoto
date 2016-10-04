@@ -35,8 +35,9 @@ public class Micro extends Article {
 	
 	// Constructeur
 	
-	public Micro(int pReference, int pNbStock, String pMarque, String pIntitule, double pPrixParJour, double pSensibilite, boolean pTypeFilaire, double pAutomonie) {
-		super();
+	public Micro(int pReference, int pNbStock, String pMarque, String pIntitule, double pPrixParJour,
+			double pSensibilite, boolean pTypeFilaire, double pAutomonie) {
+		super(pReference, pNbStock, pMarque, pIntitule, pPrixParJour);
 		this.dSensibilite = pSensibilite;
 		this.bTypeFilaire = pTypeFilaire;
 		this.dAutonomie = pAutomonie;

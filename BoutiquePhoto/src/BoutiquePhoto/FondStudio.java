@@ -25,8 +25,9 @@ public class FondStudio extends AccessoireLumiere {
 	
 	// Constructeur
 	
-	public FondStudio(int pTailleX, int pTailleY) {
-		super();
+	public FondStudio(int pReference, int pNbStock, String pMarque, String pIntitule, double pPrixParJour,
+			int pTailleX, int pTailleY) {
+		super(pReference, pNbStock, pMarque, pIntitule, pPrixParJour);
 		this.nTailleX = pTailleX;
 		this.nTailleY = pTailleY;
 	}
