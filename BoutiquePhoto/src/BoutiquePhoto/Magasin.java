@@ -1,9 +1,32 @@
 package BoutiquePhoto;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Magasin {
 
+	public static void main(String[] args) {
+		Article art1 = new Article(14, 2, "marque1", "intitule1", 56);
+		Article art2 = new Article(11, 4, "marque1", "intitule1", 41);
+		Article art3 = new Article(13, 5, "marque1", "intitule1", 20);
+		Article art4 = new Article(12, 6, "marque1", "intitule1", 80);
+		ArrayList<Article> maListe = new ArrayList<Article>();
+		maListe.add(art1);
+		maListe.add(art2);
+		maListe.add(art3);
+		maListe.add(art4);
+		Comparator<Article> comparator = new ArticlePrixComparator();
+		for(Article currentArticle : maListe) {
+			System.out.println("Ref "+currentArticle.getnReference()+" Prix : "+currentArticle.getdPrixParJour());
+		}
+		System.out.println("++++++++++++++++++++++++++++++++++++++++");
+		Collections.sort(maListe,comparator);
+		for(Article currentArticle : maListe) {
+			System.out.println("Ref : "+currentArticle.getnReference()+" Prix : "+currentArticle.getdPrixParJour());
+		}
+	}
+	
 	//attributs
 	
 	private String sNom;
@@ -43,6 +66,9 @@ public class Magasin {
 		}
 	}
 	
+	public void AfficherListeArticle() {
+		
+	}
 	public int CalculerMontant()
 	{
 		
