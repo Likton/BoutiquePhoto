@@ -10,16 +10,7 @@ public class Article {
 	private String sIntitule;
 	private double dPrixParJour;
 	private boolean bDisponibilite;
-	
-	//méthodes
-	
-	public boolean louer()
-	{
 		
-		return false;
-	}
-
-	
 	/*
 	 * Constructeur paramétré pour initialisé les attributs généraux
 	 */
@@ -33,6 +24,14 @@ public class Article {
 		this.dPrixParJour = pPrixParJour;
 		this.bDisponibilite = true;
 		
+	}
+	
+	//méthodes
+	
+	public boolean louer()
+	{
+		
+		return false;
 	}
 	
 	//accesseurs

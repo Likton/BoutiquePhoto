@@ -1,9 +1,17 @@
 package BoutiquePhoto;
 
+import java.util.List;
+
 public class Magasin {
 
+	//attributs
+	
 	private String sNom;
 	private String sNomGerant;
+	private List<Client> lClients;
+	private List<Article> lArticles;
+	
+	//accesseurs
 	
 	public String getsNom() {
 		return sNom;
@@ -17,6 +25,8 @@ public class Magasin {
 	public void setsNomGerant(String sNomGerant) {
 		this.sNomGerant = sNomGerant;
 	}
+	
+	//méthodes
 	
 	public void AfficherLocationsEnCours() 
 	{
