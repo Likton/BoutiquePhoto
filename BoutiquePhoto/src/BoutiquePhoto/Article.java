@@ -2,6 +2,8 @@ package BoutiquePhoto;
 
 public class Article {
 
+	//attributs
+	
 	private int nReference;
 	private int nNbStock;
 	private String sMarque;
@@ -9,12 +11,32 @@ public class Article {
 	private double dPrixParJour;
 	private boolean bDisponibilite;
 	
+	//méthodes
+	
 	public boolean louer()
 	{
 		
 		return false;
 	}
 
+	
+	/*
+	 * Constructeur paramétré pour initialisé les attributs généraux
+	 */
+	public void Article(int pReference, int pNbStock, String pMarque, String pIntitule, double pPrixParJour)
+	{
+		
+		this.nReference = pReference;
+		this.nNbStock = pNbStock;
+		this.sMarque = pMarque;
+		this.sIntitule = pIntitule;
+		this.dPrixParJour = pPrixParJour;
+		this.bDisponibilite = true;
+		
+	}
+	
+	//accesseurs
+	
 	public int getnReference() {
 		return nReference;
 	}
