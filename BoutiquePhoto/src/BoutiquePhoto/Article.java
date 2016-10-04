@@ -14,6 +14,7 @@ public class Article {
 	private String sIntitule;
 	private double dPrixParJour;
 	private boolean bDisponibilite;
+	private boolean bNouvelleLocation;
 		
 	/*
 	 * Constructeur paramétré pour initialisé les attributs généraux
@@ -27,26 +28,88 @@ public class Article {
 		this.sIntitule = pIntitule;
 		this.dPrixParJour = pPrixParJour;
 		this.bDisponibilite = true;
+		this.bNouvelleLocation = true;
 		
 	}
 	
 	//méthodes
 	
+	/*
+	 * @function louer(Client pClient)
+	 * @Param Client pClient
+	 * @return boolean
+	 * @Resume Location d'un article pour un client donné. La disponibilité passe à false pour cet article. Une location est crée à la date de location 
+	 */
 	public boolean louer(Client pClient)
 	{
-		this.bDisponibilite = false;
-		GregorianCalendar cDateDebut = new GregorianCalendar(TimeZone.getTimeZone("Europe/Paris"), Locale.FRANCE);
-		Location locationArticle = new Location(cDateDebut);
-		locationArticle.getlArticles().add(this);
-		pClient.addLocation(locationArticle);
-				
+		if(this.bDisponibilite)
+		{
+			this.bDisponibilite = false;
+			GregorianCalendar gcCurrentDate = new GregorianCalendar();
+			
+			//on parcours toutes les locations du client
+			for(Location currentLocation : pClient.getlLocations())
+			{	
+				//on regarde dans ces locations si l'heure actuelle serait la même qu'une des locations du client
+				if( currentLocation.getDateDebut().HOUR == gcCurrentDate.HOUR)
+				{
+					//on regarde ensuite dans ces locations faites dans la même heure que l'heure actuelle, 
+					//s'il n'y a pas une location faite dans les 2 minutes qui ont précédé.
+					//si oui, on considère que l'article loué, s'ajoute à la liste des articles de la location courante
+					if(currentLocation.getDateDebut().MINUTE > gcCurrentDate.MINUTE-2)
+					{
+						currentLocation.getlArticles().add(this);
+						//bNouvelleLocation passe à false, car il n'est pas nécessaire d'en créer une
+						this.bNouvelleLocation = false;
+						//stockage des données dans le fichier binaire
+						currentLocation.archiverDonnees();
+					}
+				}
+			}
+			//si le client veut louer l'article avec plus de 2 minutes d'intervalle avec une autre de ses locations
+			//une nouvelle location doit être créée.
+			if(this.bNouvelleLocation)
+			{
+				Location lLocation = new Location(gcCurrentDate);
+				lLocation.getlArticles().add(this);
+				pClient.getlLocations().add(lLocation);
+				//sotkcage des données dans le fichier binaire
+				lLocation.archiverDonnees();
+			}
+					
+		}
 		return this.bDisponibilite;
 	}
 	
-	public boolean RendreArticle(Client pClient)
+	
+	/*
+	 * @function RendreArticle(Client pClient)
+	 * @Param Client pClient
+	 * @return boolean
+	 * @Resume fin de location d'un article pour un client donné. La disponibilité passe à true pour cet article. 
+	 */
+	public boolean FinLocation(Client pClient)
 	{
-		this.bDisponibilite = true;
-		
+		if(!this.bDisponibilite)
+		{
+			
+			for(Location currentLocation : pClient.getlLocations())
+			{
+				for(Article currentArticle : currentLocation.getlArticles())
+				{
+					if(this.nReference == currentArticle.getnReference())
+					{
+						currentLocation.setDateFin(gcCurrentDate);
+						int nIndexLocation;
+						
+					}
+				}
+			}
+		}
+		else
+		{
+			System.out.println("L'article n'est pas loué");
+		}
 		return this.bDisponibilite;
 	}
 	

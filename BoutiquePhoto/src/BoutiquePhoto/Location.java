@@ -2,21 +2,21 @@ package BoutiquePhoto;
 
 //dépendances
 
-import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.ArrayList;
 
 public class Location {
 	
 	//attributs
 	
-	private Calendar DateDebut;
-	private Calendar DateFin;
+	private GregorianCalendar DateDebut;
+	private GregorianCalendar DateFin;
 	private ArrayList<Article> lArticles;
 	
 	/*
 	 * Constructeur
 	 */
-	public Location (Calendar pCalendar)
+	public Location (GregorianCalendar pCalendar)
 	{
 		this.DateDebut = pCalendar;
 		this.DateFin = null;
@@ -29,16 +29,16 @@ public class Location {
 	
 	//accesseurs
 	
-	public Calendar getDateDebut() {
-		return DateDebut;
+	public GregorianCalendar getDateDebut() {
+		return this.DateDebut; 
 	}
-	public void setDateDebut(Calendar dateDebut) {
+	public void setDateDebut(GregorianCalendar dateDebut) {
 		DateDebut = dateDebut;
 	}
-	public Calendar getDateFin() {
-		return DateFin;
+	public GregorianCalendar getDateFin() {
+		return this.DateFin;
 	}
-	public void setDateFin(Calendar dateFin) {
+	public void setDateFin(GregorianCalendar dateFin) {
 		DateFin = dateFin;
 	}
 
