@@ -12,9 +12,21 @@ public class Client {
 	
 	//méthodes
 	
-	public void addLocation(Location pLocation, Article pArticle)
+	/*
+	 * @function addLocation(Location pLocation, ArrayList<Article> plArticle
+	 * @Param Location pLocation
+	 * @Param ArrayList<Article> plArticle
+	 * @return void
+	 * @Resume Ajoute une location, 
+	 */
+	public void addLocation(Location pLocation)
 	{
 		
+		
+	}
+	
+	public void removeLocation(Location pLocation)
+	{
 		
 	}
 	

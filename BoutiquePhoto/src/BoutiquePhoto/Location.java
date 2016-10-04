@@ -42,4 +42,14 @@ public class Location {
 		DateFin = dateFin;
 	}
 
+
+	public ArrayList<Article> getlArticles() {
+		return lArticles;
+	}
+
+
+	public void setlArticles(ArrayList<Article> lArticles) {
+		this.lArticles = lArticles;
+	}
+
 }

@@ -37,8 +37,8 @@ public class Article {
 		this.bDisponibilite = false;
 		GregorianCalendar cDateDebut = new GregorianCalendar(TimeZone.getTimeZone("Europe/Paris"), Locale.FRANCE);
 		Location locationArticle = new Location(cDateDebut);
-		
-		pClient.addLocation(locationArticle, this);
+		locationArticle.getlArticles().add(this);
+		pClient.addLocation(locationArticle);
 				
 		return this.bDisponibilite;
 	}
