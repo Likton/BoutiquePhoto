@@ -23,7 +23,7 @@ public class Article {
 	/*
 	 * Constructeur paramétré pour initialisé les attributs généraux
 	 */
-	public void Article(int pReference, int pNbStock, String pMarque, String pIntitule, double pPrixParJour)
+	public Article(int pReference, int pNbStock, String pMarque, String pIntitule, double pPrixParJour)
 	{
 		
 		this.nReference = pReference;

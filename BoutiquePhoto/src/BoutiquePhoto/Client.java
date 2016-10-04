@@ -4,6 +4,8 @@ public class Client {
 
 	private String sNom;
 
+	
+	
 	public String getsNom() {
 		return sNom;
 	}
