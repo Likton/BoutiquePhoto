@@ -40,4 +40,12 @@ public class Client {
 	public void setsNom(String sNom) {
 		this.sNom = sNom;
 	}
+
+	public ArrayList<Location> getlLocations() {
+		return lLocations;
+	}
+
+	public void setlLocations(ArrayList<Location> lLocations) {
+		this.lLocations = lLocations;
+	}
 }

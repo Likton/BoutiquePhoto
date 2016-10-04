@@ -43,6 +43,13 @@ public class Article {
 		return this.bDisponibilite;
 	}
 	
+	public boolean RendreArticle(Client pClient)
+	{
+		this.bDisponibilite = true;
+		
+		return this.bDisponibilite;
+	}
+	
 	//accesseurs
 	
 	public int getnReference() {
