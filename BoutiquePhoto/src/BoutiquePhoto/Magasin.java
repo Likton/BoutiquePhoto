@@ -1,6 +1,6 @@
 package BoutiquePhoto;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Magasin {
 
@@ -8,8 +8,8 @@ public class Magasin {
 	
 	private String sNom;
 	private String sNomGerant;
-	private List<Client> lClients;
-	private List<Article> lArticles;
+	private ArrayList<Client> lClients;
+	private ArrayList<Article> lArticles;
 	
 	//accesseurs
 	

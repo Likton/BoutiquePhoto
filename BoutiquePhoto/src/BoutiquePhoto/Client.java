@@ -1,12 +1,25 @@
 package BoutiquePhoto;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Client {
 
 	private String sNom;
-
-	private List<Location> lLocations;	
+	private ArrayList<Location> lLocations;	
+	
+	
+	
+	
+	//méthodes
+	
+	public void addLocation(Location pLocation, Article pArticle)
+	{
+		
+		
+	}
+	
+	
+	//accesseur
 	
 	public String getsNom() {
 		return sNom;

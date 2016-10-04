@@ -1,5 +1,9 @@
 package BoutiquePhoto;
 
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+import java.util.Locale;
+
 public class Article {
 
 	//attributs
@@ -28,10 +32,15 @@ public class Article {
 	
 	//méthodes
 	
-	public boolean louer()
+	public boolean louer(Client pClient)
 	{
+		this.bDisponibilite = false;
+		GregorianCalendar cDateDebut = new GregorianCalendar(TimeZone.getTimeZone("Europe/Paris"), Locale.FRANCE);
+		Location locationArticle = new Location(cDateDebut);
 		
-		return false;
+		pClient.addLocation(locationArticle, this);
+				
+		return this.bDisponibilite;
 	}
 	
 	//accesseurs

@@ -2,28 +2,43 @@ package BoutiquePhoto;
 
 //dépendances
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.ArrayList;
 
 public class Location {
 	
 	//attributs
 	
-	private Date DateDebut;
-	private Date DateFin;
+	private Calendar DateDebut;
+	private Calendar DateFin;
+	private ArrayList<Article> lArticles;
+	
+	/*
+	 * Constructeur
+	 */
+	public Location (Calendar pCalendar)
+	{
+		this.DateDebut = pCalendar;
+		this.DateFin = null;
+		this.lArticles = new ArrayList<Article>();
+	}
+	
+	
+	//méthode
 	
 	
 	//accesseurs
 	
-	public Date getDateDebut() {
+	public Calendar getDateDebut() {
 		return DateDebut;
 	}
-	public void setDateDebut(Date dateDebut) {
+	public void setDateDebut(Calendar dateDebut) {
 		DateDebut = dateDebut;
 	}
-	public Date getDateFin() {
+	public Calendar getDateFin() {
 		return DateFin;
 	}
-	public void setDateFin(Date dateFin) {
+	public void setDateFin(Calendar dateFin) {
 		DateFin = dateFin;
 	}
 
