@@ -114,7 +114,8 @@ public class Magasin {
 			System.out.println("Reference : "+currentArticle.getnReference()
 					+" Intitule : "+currentArticle.getsIntitule()
 					+" Marque : "+currentArticle.getsMarque()
-					+" Prix : "+currentArticle.getdPrixParJour());
+					+" Prix : "+currentArticle.getdPrixParJour() 
+					+" Stock : "+currentArticle.getnNbStock());
 		}
 		
 	}
