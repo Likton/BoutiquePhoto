@@ -24,7 +24,12 @@ public class Location {
 	}
 	
 	
-	//méthode
+	//méthodes
+	
+	public void archiverDonnees()
+	{
+		
+	}
 	
 	
 	//accesseurs

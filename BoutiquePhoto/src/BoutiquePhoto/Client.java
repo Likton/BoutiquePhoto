@@ -8,26 +8,30 @@ public class Client {
 	private ArrayList<Location> lLocations;	
 	
 	
+	//Constructeurs
+	public Client()
+	{
+		this.sNom = "Jacquy";
+		this.lLocations = new ArrayList<Location>();		
+	}
 	
+	public Client(String pNom)
+	{
+		this.sNom = pNom;
+		this.lLocations = new ArrayList<Location>();
+	}
 	
 	//méthodes
 	
-	/*
-	 * @function addLocation(Location pLocation, ArrayList<Article> plArticle
-	 * @Param Location pLocation
-	 * @Param ArrayList<Article> plArticle
-	 * @return void
-	 * @Resume Ajoute une location, 
-	 */
-	public void addLocation(Location pLocation)
+	public void AfficherLocationsEnCours() 
 	{
-		
-		
-	}
-	
-	public void removeLocation(Location pLocation)
-	{
-		
+		System.out.println("Liste des locations du client : "+this.getsNom());
+		for(Location currentLocation : this.getlLocations()) {
+				System.out.println("Location du : "+currentLocation.getDateDebut());
+				for(Article currentArticle : currentLocation.getlArticles()) {
+					System.out.println("N° Ref : "+currentArticle.getnReference()+" | Nom : "+currentArticle.getsIntitule());
+				}
+		}
 	}
 	
 	
