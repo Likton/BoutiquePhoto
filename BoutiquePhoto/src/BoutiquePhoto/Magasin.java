@@ -6,27 +6,6 @@ import java.util.Comparator;
 
 public class Magasin {
 
-	public static void main(String[] args) {
-		Article art1 = new Article(14, 2, "marque1", "intitule1", 56);
-		Article art2 = new Article(11, 4, "marque1", "intitule1", 41);
-		Article art3 = new Article(13, 5, "marque1", "intitule1", 20);
-		Article art4 = new Article(12, 6, "marque1", "intitule1", 80);
-		ArrayList<Article> maListe = new ArrayList<Article>();
-		maListe.add(art1);
-		maListe.add(art2);
-		maListe.add(art3);
-		maListe.add(art4);
-		Comparator<Article> comparator = new ArticlePrixComparator();
-		for(Article currentArticle : maListe) {
-			System.out.println("Ref "+currentArticle.getnReference()+" Prix : "+currentArticle.getdPrixParJour());
-		}
-		System.out.println("++++++++++++++++++++++++++++++++++++++++");
-		Collections.sort(maListe,comparator);
-		for(Article currentArticle : maListe) {
-			System.out.println("Ref : "+currentArticle.getnReference()+" Prix : "+currentArticle.getdPrixParJour());
-		}
-	}
-	
 	//attributs
 	
 	private String sNom;
@@ -49,7 +28,44 @@ public class Magasin {
 		this.sNomGerant = sNomGerant;
 	}
 	
+	public ArrayList<Client> getlClients() {
+		return lClients;
+	}
+	public void setlClients(ArrayList<Client> lClients) {
+		this.lClients = lClients;
+	}
+	public ArrayList<Article> getlArticles() {
+		return lArticles;
+	}
+	public void setlArticles(ArrayList<Article> lArticles) {
+		this.lArticles = lArticles;
+	}
+	
+	// Constructeur
+	
+	public Magasin(String pNom, String pNomGerant) {
+		this.sNom = pNom;
+		this.sNomGerant = pNomGerant;
+		this.lArticles = new ArrayList<Article>();
+		this.lClients = new ArrayList<Client>();
+	}
+	
 	//méthodes
+	
+	/*
+	 * Permet d'ajouter un article disponible dans le magasin
+	 */
+	public void ajouterArticle(Article pArticle) {
+		this.lArticles.add(pArticle);
+	}
+	
+	/*
+	 * Permet de retirer un article du magasin
+	 */
+	public void retirerArticle(Article pArticle) {
+		this.lArticles.remove(pArticle);
+	}
+	
 	/*
 	 * Permet d'afficher la liste des articles loué par un client passé en parametre
 	 */
@@ -66,7 +82,40 @@ public class Magasin {
 		}
 	}
 	
-	public void AfficherListeArticle() {
+	/*
+	 * Permet d'afficher la liste des articles du magasin en location trié soit par référence, marque, intitulé ou prix par jour de location
+	 * (passé en paramètre) 
+	 */
+	public void AfficherListeArticle(String pCompare) {
+		switch (pCompare) {
+		case "ref":
+			Comparator<Article> comparatorRef = new ArticleReferenceComparator();
+			Collections.sort(this.lArticles, comparatorRef);
+			System.out.println("Liste des articles disponibles à la location trié par reférence");
+			break;
+		case "marque":
+			Comparator<Article> comparatorMarque = new ArticleMarqueComparator();
+			Collections.sort(this.lArticles, comparatorMarque);
+			System.out.println("Liste des articles disponibles à la location trié par marque");
+			break;
+		
+		case "intitule":
+			Comparator<Article> comparatorIntitule = new ArticleIntituleComparator();
+			Collections.sort(this.lArticles, comparatorIntitule);
+			System.out.println("Liste des articles disponibles à la location trié par intitule");
+			break;
+		case "prix":
+			Comparator<Article> comparatorPrix = new ArticlePrixComparator();
+			Collections.sort(this.lArticles, comparatorPrix);
+			System.out.println("Liste des articles disponibles à la location trié par prix par jour de location");
+			break;
+		}
+		for(Article currentArticle : this.lArticles) {
+			System.out.println("Reference : "+currentArticle.getnReference()
+					+" Intitule : "+currentArticle.getsIntitule()
+					+" Marque : "+currentArticle.getsMarque()
+					+" Prix : "+currentArticle.getdPrixParJour());
+		}
 		
 	}
 	public int CalculerMontant()
