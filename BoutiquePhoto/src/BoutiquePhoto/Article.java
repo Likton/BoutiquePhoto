@@ -12,7 +12,6 @@ public class Article {
 	private String sMarque;
 	private String sIntitule;
 	private double dPrixParJour;
-	private boolean bDisponibilite;
 	private boolean bNouvelleLocation;
 		
 	/*
@@ -26,7 +25,6 @@ public class Article {
 		this.sMarque = pMarque;
 		this.sIntitule = pIntitule;
 		this.dPrixParJour = pPrixParJour;
-		this.bDisponibilite = true;
 		this.bNouvelleLocation = true;
 		
 	}
@@ -39,12 +37,12 @@ public class Article {
 	 * @return boolean
 	 * @Resume Location d'un article pour un client donné. La disponibilité passe à false pour cet article. Une location est crée à la date de location 
 	 */
-	public boolean louer(Client pClient)
+	public int louer(Client pClient, int pNbArticleALoue)
 	{
 		this.bNouvelleLocation = true;
-		if(this.bDisponibilite)
+		
+		if(this.nNbStock > 0 && this.nNbStock-pNbArticleALoue >= 0)
 		{
-			this.bDisponibilite = false;
 			GregorianCalendar gcCurrentDate = new GregorianCalendar();
 			Date TrialTime = new Date();
 			gcCurrentDate.setTime(TrialTime);
@@ -62,7 +60,11 @@ public class Article {
 					if(currentLocation.getDateDebut().get(13) > gcCurrentDate.get(13)-5)
 					{
 						System.out.println("moins de 5 secondes");
-						currentLocation.getlArticles().add(this);
+						for(int i=0; i < pNbArticleALoue; i++)
+						{
+							currentLocation.getlArticles().add(this);
+						}
+						this.nNbStock -= pNbArticleALoue;
 						//bNouvelleLocation passe à false, car il n'est pas nécessaire d'en créer une
 						this.bNouvelleLocation = false;
 					}
@@ -78,15 +80,14 @@ public class Article {
 				Location lLocation = new Location(gcCurrentDate);
 				lLocation.getlArticles().add(this);
 				pClient.getlLocations().add(lLocation);
-				//sotkcage des données dans le fichier binaire
-				lLocation.archiverDonnees();
+				this.nNbStock -= pNbArticleALoue;
 			}
-					
+						
 		}
 		else
 			System.out.println("pas disponible");
 		
-		return this.bDisponibilite;
+		return this.nNbStock;
 	}
 	
 	
@@ -96,15 +97,12 @@ public class Article {
 	 * @return boolean
 	 * @Resume fin de location d'un article pour un client donné. La disponibilité passe à true pour cet article. 
 	 */
-	public boolean FinLocation(Client pClient)
+	public int FinLocation(Client pClient)
 	{
 		GregorianCalendar gcCurrentDate = new GregorianCalendar();
 		int nIndexLocation = 0;
 		boolean bRemoveLocation = false;
 		
-		//on teste si l'article est bien loué
-		if(!this.bDisponibilite)
-		{
 			//on parcourt la liste des locations du client
 			for(Location currentLocation : pClient.getlLocations())
 			{
@@ -129,24 +127,20 @@ public class Article {
 			
 			if(bRemoveLocation)
 			{
-				//appel de la méthode pour set la disponibilité des articles d'une location, ici on veut les rendre disponible
-				ChangerDisponibiliteArticles(pClient.getlLocations().get(nIndexLocation-1));
+				//appel de la méthode pour ré-incrémenter le nombre des articles d'une location, ici on veut les rendre disponible
+				RemettreStockArticles(pClient.getlLocations().get(nIndexLocation-1));
 				//on supprime ensuite la location des locations en cours par le client
 				pClient.getlLocations().remove(nIndexLocation-1);
 			}
-		}
-		else
-		{
-			System.out.println("L'article n'est pas loué");
-		}
-		return this.bDisponibilite;
+
+		return this.nNbStock;
 	}
 	
-	public void ChangerDisponibiliteArticles(Location pLocation)
+	public void RemettreStockArticles(Location pLocation)
 	{
 		for(int i=0; i < pLocation.getlArticles().size(); i++)
 		{
-					pLocation.getlArticles().get(i).setbDisponibilite(true);
+					pLocation.getlArticles().get(i).setnNbStock(pLocation.getlArticles().get(i).getnNbStock()+1);;
 		}
 	}
 	
@@ -191,14 +185,5 @@ public class Article {
 	public void setdPrixParJour(double dPrixParJour) {
 		this.dPrixParJour = dPrixParJour;
 	}
-
-	public boolean isbDisponibilite() {
-		return bDisponibilite;
-	}
-
-	public void setbDisponibilite(boolean bDisponibilite) {
-		this.bDisponibilite = bDisponibilite;
-	}
-	
 	
 }
