@@ -140,7 +140,7 @@ public class Article {
 						}
 						try
 						{
-							currentLocation.archiverDonnees();
+							currentLocation.archiverDonnees(pClient);
 						}
 						catch(IOException ioe)
 						{

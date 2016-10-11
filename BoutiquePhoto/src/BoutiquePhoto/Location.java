@@ -40,13 +40,14 @@ public class Location {
 		String sContenuFichier = "";
 		double MontantaFacturer = 0.0;
 		
-		sNomFichier += this.nReference + pClient.getsNom();
+		sNomFichier += this.nReference+ "-"+ pClient.getsNom();
+		this.nReference ++;
 		
-		File Dossier = new File("locations");
+		File Dossier = new File("Locations");
 		if(!Dossier.exists())
 			Dossier.mkdir();
 		
-		File Fichier = new File(sNomFichier+".loc");
+		File Fichier = new File("Locations/"+sNomFichier+".loc");
 		//si le fichier existe déjà, une simple modification est nécessaire.
 		if(Fichier.exists() && !Fichier.isDirectory())
 		{
