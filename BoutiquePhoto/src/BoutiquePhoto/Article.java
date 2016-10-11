@@ -37,7 +37,7 @@ public class Article {
 	 * @return boolean
 	 * @Resume Location d'un article pour un client donné. La disponibilité passe à false pour cet article. Une location est crée à la date de location 
 	 */
-	public int louer(Client pClient, int pNbArticleALoue)
+	public int louer(Client pClient, int pNbArticleALoue, GregorianCalendar pDateFin)
 	{
 		this.bNouvelleLocation = true;
 		
@@ -63,6 +63,9 @@ public class Article {
 							currentLocation.getlArticles().add(this);
 							this.nNbStock --;
 						}
+						currentLocation.setDateFin(pDateFin);
+						//on stocke les données dans le fichier texte
+						currentLocation.EnregistrerLocation(pClient);
 						//bNouvelleLocation passe à false, car il n'est pas nécessaire d'en créer une
 						this.bNouvelleLocation = false;
 					}
@@ -78,7 +81,10 @@ public class Article {
 					lLocation.getlArticles().add(this);
 					this.nNbStock --;
 				}
+				lLocation.setDateFin(pDateFin);
 				pClient.getlLocations().add(lLocation);
+				//on stocke les données dans le fichier texte
+				lLocation.EnregistrerLocation(pClient);
 			}
 						
 		}
@@ -112,9 +118,11 @@ public class Article {
 					if(this.nReference == currentArticle.getnReference())
 					{
 						//on configure la date de fin de la location
-						currentLocation.setDateFin(gcCurrentDate);
-						//on stocke les données dans le fichier binaire
-						currentLocation.archiverDonnees();
+						currentLocation.setDateFinReelle(gcCurrentDate);
+						if(currentLocation.getDateFin()!=currentLocation.getDateFinReelle())
+						{
+							currentLocation.ModifierLocation(pClient);
+						}
 						bRemoveLocation = true;
 						break;
 					}
