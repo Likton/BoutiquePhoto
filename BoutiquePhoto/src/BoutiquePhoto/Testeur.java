@@ -1,10 +1,11 @@
 package BoutiquePhoto;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class Testeur {
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, IOException {
 		// TODO Auto-generated method stub
 		Magasin Casto = new Magasin("Castorama", "Mr. Arthur");
 		

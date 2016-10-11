@@ -1,6 +1,7 @@
 package BoutiquePhoto;
 
 import java.util.GregorianCalendar;
+import java.io.IOException;
 import java.util.Date;
 
 public class Article {
@@ -37,7 +38,7 @@ public class Article {
 	 * @return boolean
 	 * @Resume Location d'un article pour un client donné. La disponibilité passe à false pour cet article. Une location est crée à la date de location 
 	 */
-	public int louer(Client pClient, int pNbArticleALoue, GregorianCalendar pDateFin)
+	public int louer(Client pClient, int pNbArticleALoue) throws IOException
 	{
 		this.bNouvelleLocation = true;
 		
@@ -63,9 +64,16 @@ public class Article {
 							currentLocation.getlArticles().add(this);
 							this.nNbStock --;
 						}
-						currentLocation.setDateFin(pDateFin);
+						//currentLocation.setDateFin(pDateFin);
 						//on stocke les données dans le fichier texte
-						currentLocation.EnregistrerLocation(pClient);
+						try
+						{
+							currentLocation.EnregistrerLocation(pClient);
+						}
+						catch(IOException ioe)
+						{
+							System.out.println("Erreur d'E/S: "+ioe.getMessage());
+						}
 						//bNouvelleLocation passe à false, car il n'est pas nécessaire d'en créer une
 						this.bNouvelleLocation = false;
 					}
@@ -81,10 +89,17 @@ public class Article {
 					lLocation.getlArticles().add(this);
 					this.nNbStock --;
 				}
-				lLocation.setDateFin(pDateFin);
+				//lLocation.setDateFin(pDateFin);
 				pClient.getlLocations().add(lLocation);
 				//on stocke les données dans le fichier texte
-				lLocation.EnregistrerLocation(pClient);
+				try
+				{
+					lLocation.EnregistrerLocation(pClient);
+				}
+				catch(IOException ioe)
+				{
+					System.out.println("Erreur d'E/S: "+ioe.getMessage());
+				}
 			}
 						
 		}
@@ -101,7 +116,7 @@ public class Article {
 	 * @return boolean
 	 * @Resume fin de location d'un article pour un client donné. La disponibilité passe à true pour cet article. 
 	 */
-	public int FinLocation(Client pClient)
+	public int FinLocation(Client pClient) throws IOException
 	{
 		GregorianCalendar gcCurrentDate = new GregorianCalendar();
 		int nIndexLocation = 0;
@@ -122,6 +137,14 @@ public class Article {
 						if(currentLocation.getDateFin()!=currentLocation.getDateFinReelle())
 						{
 							currentLocation.ModifierLocation(pClient);
+						}
+						try
+						{
+							currentLocation.archiverDonnees();
+						}
+						catch(IOException ioe)
+						{
+							System.out.println("Erreur d'E/S: "+ioe.getMessage());
 						}
 						bRemoveLocation = true;
 						break;

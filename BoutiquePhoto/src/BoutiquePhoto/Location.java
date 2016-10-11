@@ -4,7 +4,6 @@ package BoutiquePhoto;
 
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +34,7 @@ public class Location {
 	
 	//méthodes
 	
-	public void EnregistrerLocation(Client pClient)
+	public void EnregistrerLocation(Client pClient) throws IOException
 	{
 		String sNomFichier = "";
 		String sContenuFichier = "";
@@ -43,31 +42,52 @@ public class Location {
 		
 		sNomFichier += this.nReference + pClient.getsNom();
 		
-		File Fichier = new File("locations/"+sNomFichier);
+		File Dossier = new File("locations");
+		if(!Dossier.exists())
+			Dossier.mkdir();
+		
+		File Fichier = new File(sNomFichier+".loc");
+		//si le fichier existe déjà, une simple modification est nécessaire.
 		if(Fichier.exists() && !Fichier.isDirectory())
 		{
 			this.ModifierLocation(pClient);
 		}
-		
-		sContenuFichier += "Informations Client : \n";
-		sContenuFichier +=  pClient.getsNom() + " \n";
-		sContenuFichier +=  pClient.getsAdress() + " \n";
-		sContenuFichier +=  pClient.getsNum() + " \n";
-		
-		sContenuFichier += "Informations Articles : \n";
-		for(Article currentArticle : this.getlArticles())
+		else
 		{
-			sContenuFichier += currentArticle.getnReference() + " \n";
-			sContenuFichier += currentArticle.getsIntitule() + " \n";
-			sContenuFichier += currentArticle.getdPrixParJour() + " \n";
-			MontantaFacturer += currentArticle.getdPrixParJour();
+			FileWriter fwFichier = new FileWriter(sNomFichier+".loc");
+			//On remplit la string a écrire dans le fichier avec tout les éléments nécéssaires
+			sContenuFichier += "Informations Client : \n";
+			sContenuFichier +=  pClient.getsNom() + " \n";
+			sContenuFichier +=  pClient.getsAdress() + " \n";
+			sContenuFichier +=  pClient.getsNum() + " \n";
+			
+			sContenuFichier += "Informations Articles : \n";
+			for(Article currentArticle : this.getlArticles())
+			{
+				sContenuFichier += currentArticle.getnReference() + " \n";
+				sContenuFichier += currentArticle.getsIntitule() + " \n";
+				sContenuFichier += currentArticle.getdPrixParJour() + " \n";
+				MontantaFacturer += currentArticle.getdPrixParJour();
+			}
+			
+			sContenuFichier += "Montant total : \n";
+			sContenuFichier += MontantaFacturer + " \n";
+			
+			
+			sContenuFichier += "Date de debut : " + this.DateDebut + " \n";
+			sContenuFichier += "Date de Fin : " + this.DateFin + " \n";
+			sContenuFichier += "Date de Rendu : " + this.DateFinReelle + " \n";
+			
+			try
+			{
+				fwFichier.write(sContenuFichier);
+			}
+			catch(IOException ioe)
+			{
+				System.out.println("Erreur d'E/S: "+ioe.getMessage());
+			}
 		}
 		
-		sContenuFichier += "Montant total : \n";
-		sContenuFichier += MontantaFacturer + " \n";
-		
-		
-		sContenuFichier += 
 		
 	}
 	
@@ -78,25 +98,43 @@ public class Location {
 	
 	public void archiverDonnees() throws IOException
 	{
-		// Création du fichier de location
+		// Permet de récupérer l'année et le mois de la fin de la location
 		StringBuilder sbDate = new StringBuilder();
-		sbDate.append(this.DateFin.get(1));
-		sbDate.append(this.DateFin.get(2)+1);
+		sbDate.append(this.DateFinReelle.get(1));
+		sbDate.append(this.DateFinReelle.get(2)+1);
 		String date = sbDate.toString();
-		File fichierLoc = new File("Archives/"+date);
-		
+		File dossierArchive = new File("Archives");
+		if(!dossierArchive.exists()) {
+			dossierArchive.mkdir();
+		}
+		File fichierLoc = new File("Archives/"+date+".loc");
 		// Cas fichier déjà existant
 		if(fichierLoc.exists()) {
 			FileWriter fWriter = new FileWriter(fichierLoc,true);
-			String infoLoc = ""
-			fWriter.write("");
-			
+			fWriter.write(builder(this));
+			fWriter.close();
 		} 
 		// cas fichier non existant 
 		else {
 			FileWriter fWriter = new FileWriter(fichierLoc);
+			fWriter.write(builder(this));
+			fWriter.close();
 		}
-		
+	}
+	
+	/*
+	 * Fonction auxilliaire permettant de créer la chaine de caractère à écrire dans le fichier d'archivage
+	 */
+	
+	private String builder(Location pLocation) {
+		String infoLoc = "Location n°"+pLocation.getnReference()+" du : "+pLocation.getDateDebut().getTime()+" au "+pLocation.getDateFinReelle().getTime()+"\n";
+		for(Article currentArticle : pLocation.getlArticles()) {
+			infoLoc+="N° Ref : "+currentArticle.getnReference()
+				+" | Intitule : "+currentArticle.getsIntitule()
+				+" | Prix par jour : "+currentArticle.getdPrixParJour()+"\n";
+		}
+		infoLoc+="------------------------------------ \n";
+		return infoLoc;
 	}
 	
 	//accesseurs
@@ -131,6 +169,16 @@ public class Location {
 
 	public void setDateFinReelle(GregorianCalendar dateFinReelle) {
 		DateFinReelle = dateFinReelle;
+	}
+
+
+	public int getnReference() {
+		return nReference;
+	}
+
+
+	public void setnReference(int nReference) {
+		this.nReference = nReference;
 	}
 
 }
