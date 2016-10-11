@@ -68,7 +68,7 @@ public class Location {
 				sContenuFichier += currentArticle.getnReference() + " \n";
 				sContenuFichier += currentArticle.getsIntitule() + " \n";
 				sContenuFichier += currentArticle.getdPrixParJour() + " \n";
-				MontantaFacturer += currentArticle.getdPrixParJour();
+				MontantaFacturer += (currentArticle.getdPrixParJour()*(this.DateFin.get(this.DateFin.SECOND)-this.DateDebut.get(this.DateDebut.SECOND)));
 			}
 			
 			sContenuFichier += "Montant total : \n";
@@ -97,7 +97,7 @@ public class Location {
 		
 	}
 	
-	public void archiverDonnees() throws IOException
+	public void archiverDonnees(Client pClient) throws IOException
 	{
 		// Permet de récupérer l'année et le mois de la fin de la location
 		StringBuilder sbDate = new StringBuilder();
@@ -112,13 +112,13 @@ public class Location {
 		// Cas fichier déjà existant
 		if(fichierLoc.exists()) {
 			FileWriter fWriter = new FileWriter(fichierLoc,true);
-			fWriter.write(builder(this));
+			fWriter.write(builder(this, pClient));
 			fWriter.close();
 		} 
 		// cas fichier non existant 
 		else {
 			FileWriter fWriter = new FileWriter(fichierLoc);
-			fWriter.write(builder(this));
+			fWriter.write(builder(this, pClient));
 			fWriter.close();
 		}
 	}
@@ -127,8 +127,9 @@ public class Location {
 	 * Fonction auxilliaire permettant de créer la chaine de caractère à écrire dans le fichier d'archivage
 	 */
 	
-	private String builder(Location pLocation) {
+	private String builder(Location pLocation, Client pClient) {
 		String infoLoc = "Location n°"+pLocation.getnReference()+" du : "+pLocation.getDateDebut().getTime()+" au "+pLocation.getDateFinReelle().getTime()+"\n";
+		infoLoc+="Effectuée par : "+pClient.getsNom()+"\n";
 		for(Article currentArticle : pLocation.getlArticles()) {
 			infoLoc+="N° Ref : "+currentArticle.getnReference()
 				+" | Intitule : "+currentArticle.getsIntitule()
