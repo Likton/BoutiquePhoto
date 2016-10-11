@@ -4,6 +4,7 @@ package BoutiquePhoto;
 
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
@@ -55,38 +56,31 @@ public class Location {
 		}
 		else
 		{
-			FileWriter fwFichier = new FileWriter(sNomFichier+".loc");
 			//On remplit la string a écrire dans le fichier avec tout les éléments nécéssaires
 			sContenuFichier += "Informations Client : \n";
-			sContenuFichier +=  pClient.getsNom() + " \n";
-			sContenuFichier +=  pClient.getsAdress() + " \n";
+			sContenuFichier +=  pClient.getsNom() + " | ";
+			sContenuFichier +=  pClient.getsAdress() + " | ";
 			sContenuFichier +=  pClient.getsNum() + " \n";
 			
 			sContenuFichier += "Informations Articles : \n";
 			for(Article currentArticle : this.getlArticles())
 			{
-				sContenuFichier += currentArticle.getnReference() + " \n";
-				sContenuFichier += currentArticle.getsIntitule() + " \n";
+				sContenuFichier += currentArticle.getnReference() + " | ";
+				sContenuFichier += currentArticle.getsIntitule() + " | ";
 				sContenuFichier += currentArticle.getdPrixParJour() + " \n";
-				MontantaFacturer += (currentArticle.getdPrixParJour()*(this.DateFin.get(this.DateFin.SECOND)-this.DateDebut.get(this.DateDebut.SECOND)));
+				MontantaFacturer += (currentArticle.getdPrixParJour());
 			}
 			
 			sContenuFichier += "Montant total : \n";
 			sContenuFichier += MontantaFacturer + " \n";
 			
 			
-			sContenuFichier += "Date de debut : " + this.DateDebut + " \n";
-			sContenuFichier += "Date de Fin : " + this.DateFin + " \n";
-			sContenuFichier += "Date de Rendu : " + this.DateFinReelle + " \n";
+			sContenuFichier += "Date de debut : " + this.DateDebut.getTime() + " \n";
+			sContenuFichier += "Date de Fin : " + this.DateFin.getTime() + " \n";
 			
-			try
-			{
-				fwFichier.write(sContenuFichier);
-			}
-			catch(IOException ioe)
-			{
-				System.out.println("Erreur d'E/S: "+ioe.getMessage());
-			}
+			FileWriter fwFichier = new FileWriter("Locations/"+sNomFichier+".loc");
+			fwFichier.write(sContenuFichier);
+			fwFichier.close();
 		}
 		
 		
@@ -151,9 +145,16 @@ public class Location {
 		return this.DateFin;
 	}
 	public void setDateFin(GregorianCalendar dateFin) {
-		DateFin = dateFin;
+		this.DateFin = dateFin;
 	}
 
+	public GregorianCalendar getDateFinReelle() {
+		return DateFinReelle;
+	}
+
+	public void setDateFinReelle(GregorianCalendar dateFinReelle) {
+		this.DateFinReelle = dateFinReelle;
+	}
 
 	public ArrayList<Article> getlArticles() {
 		return lArticles;
@@ -162,15 +163,6 @@ public class Location {
 
 	public void setlArticles(ArrayList<Article> lArticles) {
 		this.lArticles = lArticles;
-	}
-
-	public GregorianCalendar getDateFinReelle() {
-		return DateFinReelle;
-	}
-
-
-	public void setDateFinReelle(GregorianCalendar dateFinReelle) {
-		DateFinReelle = dateFinReelle;
 	}
 
 

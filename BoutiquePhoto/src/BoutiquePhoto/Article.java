@@ -38,7 +38,7 @@ public class Article {
 	 * @return boolean
 	 * @Resume Location d'un article pour un client donné. La disponibilité passe à false pour cet article. Une location est crée à la date de location 
 	 */
-	public int louer(Client pClient, int pNbArticleALoue) throws IOException
+	public int louer(Client pClient, int pNbArticleALoue, GregorianCalendar pDateFin) throws IOException
 	{
 		this.bNouvelleLocation = true;
 		
@@ -64,6 +64,7 @@ public class Article {
 							currentLocation.getlArticles().add(this);
 							this.nNbStock --;
 						}
+						currentLocation.setDateFin(pDateFin);
 						//currentLocation.setDateFin(pDateFin);
 						//on stocke les données dans le fichier texte
 						try
@@ -89,7 +90,7 @@ public class Article {
 					lLocation.getlArticles().add(this);
 					this.nNbStock --;
 				}
-				//lLocation.setDateFin(pDateFin);
+				lLocation.setDateFin(pDateFin);
 				pClient.getlLocations().add(lLocation);
 				//on stocke les données dans le fichier texte
 				try
