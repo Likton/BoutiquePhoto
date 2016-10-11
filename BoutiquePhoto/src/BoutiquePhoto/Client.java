@@ -5,6 +5,9 @@ import java.util.ArrayList;
 public class Client {
 
 	private String sNom;
+	private String sAdress;
+	private String sNum;
+	
 	private ArrayList<Location> lLocations;	
 	
 	
@@ -40,4 +43,21 @@ public class Client {
 	public void setlLocations(ArrayList<Location> lLocations) {
 		this.lLocations = lLocations;
 	}
+	
+	public String getsAdress() {
+		return sAdress;
+	}
+
+	public void setsAdress(String sAdress) {
+		this.sAdress = sAdress;
+	}
+
+	public String getsNum() {
+		return sNum;
+	}
+
+	public void setsNum(String sNum) {
+		this.sNum = sNum;
+	}
+
 }

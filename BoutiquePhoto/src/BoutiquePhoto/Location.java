@@ -4,7 +4,6 @@ package BoutiquePhoto;
 
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +34,7 @@ public class Location {
 	
 	//méthodes
 	
-	public void EnregistrerLocation(Client pClient)
+	public void EnregistrerLocation(Client pClient) throws IOException
 	{
 		String sNomFichier = "";
 		String sContenuFichier = "";
@@ -43,31 +42,52 @@ public class Location {
 		
 		sNomFichier += this.nReference + pClient.getsNom();
 		
-		File Fichier = new File("locations/"+sNomFichier);
+		File Dossier = new File("locations");
+		if(!Dossier.exists())
+			Dossier.mkdir();
+		
+		File Fichier = new File(sNomFichier+".loc");
+		//si le fichier existe déjà, une simple modification est nécessaire.
 		if(Fichier.exists() && !Fichier.isDirectory())
 		{
 			this.ModifierLocation(pClient);
 		}
-		
-		sContenuFichier += "Informations Client : \n";
-		sContenuFichier +=  pClient.getsNom() + " \n";
-		sContenuFichier +=  pClient.getsAdress() + " \n";
-		sContenuFichier +=  pClient.getsNum() + " \n";
-		
-		sContenuFichier += "Informations Articles : \n";
-		for(Article currentArticle : this.getlArticles())
+		else
 		{
-			sContenuFichier += currentArticle.getnReference() + " \n";
-			sContenuFichier += currentArticle.getsIntitule() + " \n";
-			sContenuFichier += currentArticle.getdPrixParJour() + " \n";
-			MontantaFacturer += currentArticle.getdPrixParJour();
+			FileWriter fwFichier = new FileWriter(sNomFichier+".loc");
+			//On remplit la string a écrire dans le fichier avec tout les éléments nécéssaires
+			sContenuFichier += "Informations Client : \n";
+			sContenuFichier +=  pClient.getsNom() + " \n";
+			sContenuFichier +=  pClient.getsAdress() + " \n";
+			sContenuFichier +=  pClient.getsNum() + " \n";
+			
+			sContenuFichier += "Informations Articles : \n";
+			for(Article currentArticle : this.getlArticles())
+			{
+				sContenuFichier += currentArticle.getnReference() + " \n";
+				sContenuFichier += currentArticle.getsIntitule() + " \n";
+				sContenuFichier += currentArticle.getdPrixParJour() + " \n";
+				MontantaFacturer += currentArticle.getdPrixParJour();
+			}
+			
+			sContenuFichier += "Montant total : \n";
+			sContenuFichier += MontantaFacturer + " \n";
+			
+			
+			sContenuFichier += "Date de debut : " + this.DateDebut + " \n";
+			sContenuFichier += "Date de Fin : " + this.DateFin + " \n";
+			sContenuFichier += "Date de Rendu : " + this.DateFinReelle + " \n";
+			
+			try
+			{
+				fwFichier.write(sContenuFichier);
+			}
+			catch(IOException ioe)
+			{
+				System.out.println("Erreur d'E/S: "+ioe.getMessage());
+			}
 		}
 		
-		sContenuFichier += "Montant total : \n";
-		sContenuFichier += MontantaFacturer + " \n";
-		
-		
-		sContenuFichier += 
 		
 	}
 	
