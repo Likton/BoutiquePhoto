@@ -21,19 +21,7 @@ public class Client {
 		this.lLocations = new ArrayList<Location>();
 	}
 	
-	//méthodes
-	
-	public void AfficherLocationsEnCours() 
-	{
-		System.out.println("Liste des locations du client : "+this.getsNom());
-		for(Location currentLocation : this.getlLocations()) {
-				System.out.println("Location du : "+currentLocation.getDateDebut());
-				for(Article currentArticle : currentLocation.getlArticles()) {
-					System.out.println("N° Ref : "+currentArticle.getnReference()+" | Nom : "+currentArticle.getsIntitule());
-				}
-		}
-	}
-	
+	//méthodes	
 	
 	//accesseur
 	

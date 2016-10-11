@@ -53,39 +53,37 @@ public class Article {
 				//on regarde dans ces locations si l'heure actuelle serait la même qu'une des locations du client
 				if( currentLocation.getDateDebut().get(12) == gcCurrentDate.get(12))
 				{
-					System.out.println(" même Minutes");
 					//on regarde ensuite dans ces locations faites dans la même heure que l'heure actuelle, 
 					//s'il n'y a pas une location faite dans les 2 minutes qui ont précédé.
 					//si oui, on considère que l'article loué, s'ajoute à la liste des articles de la location courante
 					if(currentLocation.getDateDebut().get(13) > gcCurrentDate.get(13)-5)
 					{
-						System.out.println("moins de 5 secondes");
 						for(int i=0; i < pNbArticleALoue; i++)
 						{
 							currentLocation.getlArticles().add(this);
+							this.nNbStock --;
 						}
-						this.nNbStock -= pNbArticleALoue;
 						//bNouvelleLocation passe à false, car il n'est pas nécessaire d'en créer une
 						this.bNouvelleLocation = false;
 					}
 				}
 			}
-			System.out.println("etat bNouvelleLocation : "+this.bNouvelleLocation);
 			//si le client veut louer l'article avec plus de 2 minutes d'intervalle avec une autre de ses locations
 			//une nouvelle location doit être créée.
 			if(this.bNouvelleLocation)
 			{
-				
-				System.out.println("nouvelle location");
 				Location lLocation = new Location(gcCurrentDate);
-				lLocation.getlArticles().add(this);
+				for(int i=0; i < pNbArticleALoue; i++)
+				{
+					lLocation.getlArticles().add(this);
+					this.nNbStock --;
+				}
 				pClient.getlLocations().add(lLocation);
-				this.nNbStock -= pNbArticleALoue;
 			}
 						
 		}
 		else
-			System.out.println("pas disponible");
+			System.out.println("article pas disponible \n");
 		
 		return this.nNbStock;
 	}

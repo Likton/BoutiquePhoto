@@ -74,12 +74,13 @@ public class Magasin {
 		System.out.println("Liste des locations du client : "+pClient.getsNom());
 		for(Location currentLocation : pClient.getlLocations()) {
 			if(currentLocation.getDateFin() == null) {
-				System.out.println("Location du : "+currentLocation.getDateDebut());
+				System.out.println("Location du : "+currentLocation.getDateDebut().getTime());
 				for(Article currentArticle : currentLocation.getlArticles()) {
 					System.out.println("N° Ref : "+currentArticle.getnReference()+" | Nom : "+currentArticle.getsIntitule());
 				}
 			}
 		}
+		System.out.println();
 	}
 	
 	/*
