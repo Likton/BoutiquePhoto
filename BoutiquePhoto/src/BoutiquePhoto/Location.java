@@ -76,8 +76,26 @@ public class Location {
 		
 	}
 	
-	public void archiverDonnees()
+	public void archiverDonnees() throws IOException
 	{
+		// Création du fichier de location
+		StringBuilder sbDate = new StringBuilder();
+		sbDate.append(this.DateFin.get(1));
+		sbDate.append(this.DateFin.get(2)+1);
+		String date = sbDate.toString();
+		File fichierLoc = new File("Archives/"+date);
+		
+		// Cas fichier déjà existant
+		if(fichierLoc.exists()) {
+			FileWriter fWriter = new FileWriter(fichierLoc,true);
+			String infoLoc = ""
+			fWriter.write("");
+			
+		} 
+		// cas fichier non existant 
+		else {
+			FileWriter fWriter = new FileWriter(fichierLoc);
+		}
 		
 	}
 	
