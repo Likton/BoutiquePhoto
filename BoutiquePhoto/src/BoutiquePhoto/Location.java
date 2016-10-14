@@ -119,7 +119,7 @@ public class Location {
 	 * fonction auxilliaire permettant l'écriture des informations de la location dans un fichier
 	 */
 	private void stockerChar(File pFile,  char[] tab, boolean pAppend) throws IOException {
-		DataOutputStream fluxSortieBinaire = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(pFile,pAppend)));
+		DataOutputStream fluxSortieBinaire = new DataOutputStream(new FileOutputStream(pFile,pAppend));
 		for(char current : tab) {
 			fluxSortieBinaire.writeChar(current);
 		}
