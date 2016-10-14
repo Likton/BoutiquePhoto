@@ -1,9 +1,11 @@
 package BoutiquePhoto;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Client {
-
+	
+	private UUID uRef;
 	private String sNom;
 	private String sAdress;
 	private String sNum;
@@ -14,12 +16,14 @@ public class Client {
 	//Constructeurs
 	public Client()
 	{
+		this.uRef = UUID.randomUUID();
 		this.sNom = "Jacquy";
 		this.lLocations = new ArrayList<Location>();		
 	}
 	
 	public Client(String pNom)
 	{
+		this.uRef = UUID.randomUUID();
 		this.sNom = pNom;
 		this.lLocations = new ArrayList<Location>();
 	}

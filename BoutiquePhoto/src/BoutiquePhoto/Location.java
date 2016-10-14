@@ -105,7 +105,7 @@ public class Location {
 		}
 		File fichierLoc = new File("Archives/"+date+".loc");
 		char[] tab = builder(this, pClient).toCharArray();
-		// Cas fichier déjà existant		
+		// Cas fichier déjà existant
 		if(fichierLoc.exists()) {
 			stockerChar(fichierLoc, tab, true);
 		} 
