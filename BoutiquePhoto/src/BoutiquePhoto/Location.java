@@ -4,7 +4,10 @@ package BoutiquePhoto;
 
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.UUID;
+import java.io.DataOutput;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +19,7 @@ public class Location {
 	private GregorianCalendar DateDebut;
 	private GregorianCalendar DateFin;
 	private GregorianCalendar DateFinReelle;
-	private int nReference;
+	private UUID uReference;
 	
 	private ArrayList<Article> lArticles;
 	
@@ -28,7 +31,7 @@ public class Location {
 		this.DateDebut = pCalendar;
 		this.DateFin = null;
 		this.DateFinReelle = null;
-		this.nReference = 1;
+		this.uReference = UUID.randomUUID();
 		this.lArticles = new ArrayList<Article>();
 	}
 	
@@ -41,9 +44,7 @@ public class Location {
 		String sContenuFichier = "";
 		double MontantaFacturer = 0.0;
 		
-		sNomFichier += this.nReference+ "-"+ pClient.getsNom();
-		this.nReference ++;
-		
+		sNomFichier += this.uReference+ "-"+ pClient.getsNom();
 		File Dossier = new File("Locations");
 		if(!Dossier.exists())
 			Dossier.mkdir();
@@ -103,18 +104,26 @@ public class Location {
 			dossierArchive.mkdir();
 		}
 		File fichierLoc = new File("Archives/"+date+".loc");
-		// Cas fichier déjà existant
+		char[] tab = builder(this, pClient).toCharArray();
+		// Cas fichier déjà existant		
 		if(fichierLoc.exists()) {
-			FileWriter fWriter = new FileWriter(fichierLoc,true);
-			fWriter.write(builder(this, pClient));
-			fWriter.close();
+			stockerChar(fichierLoc, tab, true);
 		} 
 		// cas fichier non existant 
 		else {
-			FileWriter fWriter = new FileWriter(fichierLoc);
-			fWriter.write(builder(this, pClient));
-			fWriter.close();
+			stockerChar(fichierLoc, tab, false);
 		}
+	}
+	
+	/*
+	 * fonction auxilliaire permettant l'écriture des informations de la location dans un fichier
+	 */
+	private void stockerChar(File pFile,  char[] tab, boolean pAppend) throws IOException {
+		DataOutputStream fluxSortieBinaire = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(pFile,pAppend)));
+		for(char current : tab) {
+			fluxSortieBinaire.writeChar(current);
+		}
+		fluxSortieBinaire.close();
 	}
 	
 	/*
@@ -122,14 +131,14 @@ public class Location {
 	 */
 	
 	private String builder(Location pLocation, Client pClient) {
-		String infoLoc = "Location n°"+pLocation.getnReference()+" du : "+pLocation.getDateDebut().getTime()+" au "+pLocation.getDateFinReelle().getTime()+"\n";
-		infoLoc+="Effectuée par : "+pClient.getsNom()+"\n";
+		String infoLoc = pLocation.getuReference()+" "+pLocation.getDateDebut().getTime()+" "+pLocation.getDateFinReelle().getTime();
+		infoLoc+=" "+pClient.getsNom();
 		for(Article currentArticle : pLocation.getlArticles()) {
-			infoLoc+="N° Ref : "+currentArticle.getnReference()
-				+" | Intitule : "+currentArticle.getsIntitule()
-				+" | Prix par jour : "+currentArticle.getdPrixParJour()+"\n";
+			infoLoc+=" "+currentArticle.getnReference()
+				+" "+currentArticle.getsIntitule()
+				+" "+currentArticle.getdPrixParJour();
 		}
-		infoLoc+="------------------------------------ \n";
+		infoLoc+="\n";
 		return infoLoc;
 	}
 	
@@ -166,13 +175,13 @@ public class Location {
 	}
 
 
-	public int getnReference() {
-		return nReference;
+	public UUID getuReference() {
+		return uReference;
 	}
 
 
-	public void setnReference(int nReference) {
-		this.nReference = nReference;
+	public void setuReference(UUID pReference) {
+		this.uReference = pReference;
 	}
 
 }
