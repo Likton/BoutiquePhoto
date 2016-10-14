@@ -6,6 +6,9 @@ import java.util.GregorianCalendar;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.UUID;
+import java.io.DataOutput;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
@@ -102,17 +105,28 @@ public class Location {
 			dossierArchive.mkdir();
 		}
 		File fichierLoc = new File("Archives/"+date+".loc");
+		char[] tab = builder(this, pClient).toCharArray();
 		// Cas fichier déjà existant
+		
+		
 		if(fichierLoc.exists()) {
-			FileWriter fWriter = new FileWriter(fichierLoc,true);
-			fWriter.write(builder(this, pClient));
-			fWriter.close();
+			FileOutputStream testFileOutputStream = new FileOutputStream("Archives/"+date+".loc",true);
+			DataOutputStream testDataOutputStream = new DataOutputStream(testFileOutputStream);
+			for(char current : tab) {
+				testDataOutputStream.writeChar(current);
+			}
+			testFileOutputStream.close();
+			testDataOutputStream.close();
 		} 
 		// cas fichier non existant 
 		else {
-			FileWriter fWriter = new FileWriter(fichierLoc);
-			fWriter.write(builder(this, pClient));
-			fWriter.close();
+			FileOutputStream testFileOutputStream = new FileOutputStream("Archives/"+date+".loc");
+			DataOutputStream testDataOutputStream = new DataOutputStream(testFileOutputStream);
+			for(char current : tab) {
+				testDataOutputStream.writeChar(current);
+			}
+			testFileOutputStream.close();
+			testDataOutputStream.close();
 		}
 	}
 	
@@ -121,14 +135,14 @@ public class Location {
 	 */
 	
 	private String builder(Location pLocation, Client pClient) {
-		String infoLoc = "Location n°"+pLocation.getuReference()+" du : "+pLocation.getDateDebut().getTime()+" au "+pLocation.getDateFinReelle().getTime()+"\n";
-		infoLoc+="Effectuée par : "+pClient.getsNom()+"\n";
+		String infoLoc = pLocation.getuReference()+" "+pLocation.getDateDebut().getTime()+" "+pLocation.getDateFinReelle().getTime();
+		infoLoc+=" "+pClient.getsNom();
 		for(Article currentArticle : pLocation.getlArticles()) {
-			infoLoc+="N° Ref : "+currentArticle.getnReference()
-				+" | Intitule : "+currentArticle.getsIntitule()
-				+" | Prix par jour : "+currentArticle.getdPrixParJour()+"\n";
+			infoLoc+=" "+currentArticle.getnReference()
+				+" "+currentArticle.getsIntitule()
+				+" "+currentArticle.getdPrixParJour();
 		}
-		infoLoc+="------------------------------------ \n";
+		infoLoc+="\n";
 		return infoLoc;
 	}
 	
