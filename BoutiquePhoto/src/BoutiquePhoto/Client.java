@@ -16,15 +16,27 @@ public class Client {
 	//Constructeurs
 	public Client()
 	{
-		this.uRef = UUID.randomUUID();
-		this.sNom = "Jacquy";
+		this.setuRef(UUID.randomUUID());
+		this.sNom = "Jules Auguste Valentin Arthur";
+		this.sAdress = "";
+		this.sNum = "";
 		this.lLocations = new ArrayList<Location>();		
 	}
 	
 	public Client(String pNom)
 	{
-		this.uRef = UUID.randomUUID();
+		this.setuRef(UUID.randomUUID());
 		this.sNom = pNom;
+		this.lLocations = new ArrayList<Location>();
+		this.sAdress = "";
+		this.sNum = "";
+	}
+	
+	public Client(String pNom, String pAdress, String pNum) {
+		this.setuRef(UUID.randomUUID());
+		this.sNom = pNom;
+		this.sAdress = pAdress;
+		this.sNum = pNum;
 		this.lLocations = new ArrayList<Location>();
 	}
 	
@@ -62,6 +74,14 @@ public class Client {
 
 	public void setsNum(String sNum) {
 		this.sNum = sNum;
+	}
+
+	public UUID getuRef() {
+		return uRef;
+	}
+
+	public void setuRef(UUID uRef) {
+		this.uRef = uRef;
 	}
 
 }

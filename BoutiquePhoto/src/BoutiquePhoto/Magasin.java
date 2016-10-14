@@ -66,6 +66,14 @@ public class Magasin {
 		this.lArticles.remove(pArticle);
 	}
 	
+	public void ajouterClient(Client pClient) {
+		this.lClients.add(pClient);
+	}
+	
+	public void supprimerClient(Client pClient) {
+		this.lClients.remove(pClient);
+	}
+	
 	/*
 	 * Permet d'afficher la liste des articles loué par un client passé en parametre
 	 */
