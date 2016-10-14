@@ -4,9 +4,8 @@ package BoutiquePhoto;
 
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.UUID;
-import java.io.DataOutput;
+import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -107,27 +106,24 @@ public class Location {
 		File fichierLoc = new File("Archives/"+date+".loc");
 		char[] tab = builder(this, pClient).toCharArray();
 		// Cas fichier déjà existant
-		
-		
 		if(fichierLoc.exists()) {
-			FileOutputStream testFileOutputStream = new FileOutputStream("Archives/"+date+".loc",true);
-			DataOutputStream testDataOutputStream = new DataOutputStream(testFileOutputStream);
-			for(char current : tab) {
-				testDataOutputStream.writeChar(current);
-			}
-			testFileOutputStream.close();
-			testDataOutputStream.close();
+			stockerChar(fichierLoc, tab, true);
 		} 
 		// cas fichier non existant 
 		else {
-			FileOutputStream testFileOutputStream = new FileOutputStream("Archives/"+date+".loc");
-			DataOutputStream testDataOutputStream = new DataOutputStream(testFileOutputStream);
-			for(char current : tab) {
-				testDataOutputStream.writeChar(current);
-			}
-			testFileOutputStream.close();
-			testDataOutputStream.close();
+			stockerChar(fichierLoc, tab, false);
 		}
+	}
+	
+	/*
+	 * fonction auxilliaire permettant l'écriture des informations de la location dans un fichier
+	 */
+	private void stockerChar(File pFile,  char[] tab, boolean pAppend) throws IOException {
+		DataOutputStream fluxSortieBinaire = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(pFile,pAppend)));
+		for(char current : tab) {
+			fluxSortieBinaire.writeChar(current);
+		}
+		fluxSortieBinaire.close();
 	}
 	
 	/*
