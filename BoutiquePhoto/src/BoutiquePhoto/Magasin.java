@@ -121,5 +121,10 @@ public class Magasin {
 		
 	}
 	
+	public int calculerMontant() {
+		
+		return 0;
+	}
+	
 	
 }

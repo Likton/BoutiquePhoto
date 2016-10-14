@@ -4,6 +4,7 @@ package BoutiquePhoto;
 
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
@@ -131,15 +132,33 @@ public class Location {
 	 */
 	
 	private String builder(Location pLocation, Client pClient) {
+		double montantTotal = 0;
+		long nbJour = differenceDate(pLocation.getDateDebut().getTime(), pLocation.getDateFin().getTime());
+		System.out.println(nbJour);
 		String infoLoc = pLocation.getuReference()+" "+pLocation.getDateDebut().getTime()+" "+pLocation.getDateFinReelle().getTime();
 		infoLoc+=" "+pClient.getsNom();
 		for(Article currentArticle : pLocation.getlArticles()) {
 			infoLoc+=" "+currentArticle.getnReference()
 				+" "+currentArticle.getsIntitule()
 				+" "+currentArticle.getdPrixParJour();
+			montantTotal += nbJour*currentArticle.getdPrixParJour();
 		}
+		infoLoc+=" "+montantTotal;
 		infoLoc+="\n";
 		return infoLoc;
+	}
+	
+	/*
+	 * fonction auxilliaire permettant d'obtenir le nombre de jour séparant deux dates
+	 */
+	private long differenceDate(Date pGc1, Date pGc2) {
+		long dureeJour = 1000l * 60 * 60 * 24;
+		//long date1 = pGc1.getTime().getTime();
+		//long date2 = pGc2.getTime().getTime();
+		//GregorianCalendar gc1 = new GregorianCalendar(pGc1.get(pGc1.YEAR), pGc1.get(pGc1.MONTH), pGc1.get(pGc1.DATE));
+		//GregorianCalendar gc2 = new GregorianCalendar(pGc2.get(pGc2.YEAR), pGc2.get(pGc2.MONTH), pGc2.get(pGc2.DATE));
+		long difference = Math.abs(pGc1.getTime()-pGc2.getTime());
+		return (difference/dureeJour)+1;
 	}
 	
 	//accesseurs
