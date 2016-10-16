@@ -1,8 +1,10 @@
 package BoutiquePhoto;
 
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Testeur {
@@ -58,6 +60,18 @@ public class Testeur {
 		System.out.println("Le Client2 rends ses articles de sa 2ème location");
 		Refl1.FinLocation(Client2);
 		Casto.AfficherLocationsEnCours(Client2);
+		/*DataInputStream fluxBinaire = new DataInputStream(new FileInputStream(new File("Archives/201610.loc")));
+		char test;
+		try {
+			while(true) {
+				test = fluxBinaire.readChar();
+				System.out.print(test);
+			}
+		} catch(Exception e) {
+			
+		}*/
+		System.out.println(Casto.calculerMontant(new GregorianCalendar(2016,9,1),new GregorianCalendar(2017,0,1)));
+		
 	}
 
 }

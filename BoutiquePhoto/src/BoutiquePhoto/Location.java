@@ -4,6 +4,7 @@ package BoutiquePhoto;
 
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 import java.io.DataOutput;
@@ -97,8 +98,15 @@ public class Location {
 	{
 		// Permet de récupérer l'année et le mois de la fin de la location
 		StringBuilder sbDate = new StringBuilder();
-		sbDate.append(this.DateFinReelle.get(1));
-		sbDate.append(this.DateFinReelle.get(2)+1);
+		sbDate.append(this.DateFinReelle.get(Calendar.YEAR));
+		String valueMonth =Integer.toString(this.DateFinReelle.get(Calendar.MONTH)+1);
+		String realValueMonth ="";
+		if(valueMonth.length() == 1) {
+			realValueMonth = "0"+valueMonth;
+		} else {
+			realValueMonth = Integer.toString(this.DateFinReelle.get(Calendar.MONTH)+1);
+		}
+		sbDate.append(realValueMonth);
 		String date = sbDate.toString();
 		File dossierArchive = new File("Archives");
 		if(!dossierArchive.exists()) {
@@ -130,20 +138,19 @@ public class Location {
 	/*
 	 * Fonction auxilliaire permettant de créer la chaine de caractère à écrire dans le fichier d'archivage
 	 */
-	
 	private String builder(Location pLocation, Client pClient) {
 		double montantTotal = 0;
-		long nbJour = differenceDate(pLocation.getDateDebut().getTime(), pLocation.getDateFin().getTime());
+		long nbJour = differenceDate(pLocation.getDateDebut(), pLocation.getDateFinReelle());
 		System.out.println(nbJour);
-		String infoLoc = pLocation.getuReference()+" "+pLocation.getDateDebut().getTime()+" "+pLocation.getDateFinReelle().getTime();
-		infoLoc+=" "+pClient.getsNom();
+		String infoLoc = pLocation.getuReference()+","+pLocation.getDateDebut().getTime()+","+pLocation.getDateFinReelle().getTime();
+		infoLoc+=","+pClient.getsNom();
 		for(Article currentArticle : pLocation.getlArticles()) {
-			infoLoc+=" "+currentArticle.getnReference()
-				+" "+currentArticle.getsIntitule()
-				+" "+currentArticle.getdPrixParJour();
+			infoLoc+=","+currentArticle.getnReference()
+				+","+currentArticle.getsIntitule()
+				+","+currentArticle.getdPrixParJour();
 			montantTotal += nbJour*currentArticle.getdPrixParJour();
 		}
-		infoLoc+=" "+montantTotal;
+		infoLoc+=","+montantTotal;
 		infoLoc+="\n";
 		return infoLoc;
 	}
@@ -151,14 +158,10 @@ public class Location {
 	/*
 	 * fonction auxilliaire permettant d'obtenir le nombre de jour séparant deux dates
 	 */
-	private long differenceDate(Date pGc1, Date pGc2) {
-		long dureeJour = 1000l * 60 * 60 * 24;
-		//long date1 = pGc1.getTime().getTime();
-		//long date2 = pGc2.getTime().getTime();
-		//GregorianCalendar gc1 = new GregorianCalendar(pGc1.get(pGc1.YEAR), pGc1.get(pGc1.MONTH), pGc1.get(pGc1.DATE));
-		//GregorianCalendar gc2 = new GregorianCalendar(pGc2.get(pGc2.YEAR), pGc2.get(pGc2.MONTH), pGc2.get(pGc2.DATE));
-		long difference = Math.abs(pGc1.getTime()-pGc2.getTime());
-		return (difference/dureeJour)+1;
+	private long differenceDate(GregorianCalendar pGc1, GregorianCalendar pGc2) {
+		int difference = 0;
+		difference = Math.abs(pGc1.get(Calendar.DAY_OF_YEAR)-pGc2.get(Calendar.DAY_OF_YEAR));
+		return difference+1;
 	}
 	
 	//accesseurs
