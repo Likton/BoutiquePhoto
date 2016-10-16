@@ -105,16 +105,16 @@ public class Location {
 		
 		sNomFichier += this.uReference+ "-"+ pClient.getsNom();
 
-		FileWriter fwModifFichier = new FileWriter("Location/"+sNomFichier+".loc", true);
-		
-		sContenuFichier += "Date de Fin réelle : " + this.DateFinReelle.getTime() + " \n";
-		for(Article currentArticle : this.getlArticles())
-		{
-			MontantaFacturer += (currentArticle.getdPrixParJour());
-		}
-		sContenuFichier += "Montant total à payer: "+MontantaFacturer*(Math.abs(this.DateFinReelle.get(Calendar.DAY_OF_YEAR)-this.DateDebut.get(Calendar.DAY_OF_YEAR)));
-		fwModifFichier.write(sContenuFichier);
-		fwModifFichier.close();
+//		FileWriter fwModifFichier = new FileWriter("Location/"+sNomFichier+".loc", true);
+//		
+//		sContenuFichier += "Date de Fin réelle : " + this.DateFinReelle.getTime() + " \n";
+//		for(Article currentArticle : this.getlArticles())
+//		{
+//			MontantaFacturer += (currentArticle.getdPrixParJour());
+//		}
+//		sContenuFichier += "Montant total à payer: "+MontantaFacturer*(Math.abs(this.DateFinReelle.get(Calendar.DAY_OF_YEAR)-this.DateDebut.get(Calendar.DAY_OF_YEAR)));
+//		fwModifFichier.write(sContenuFichier);
+//		fwModifFichier.close();
 	}
 	
 	/**

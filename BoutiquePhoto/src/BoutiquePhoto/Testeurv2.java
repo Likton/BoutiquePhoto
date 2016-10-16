@@ -32,13 +32,33 @@ public class Testeurv2 {
 		MonMagasin.ajouterArticle(pledArticle);
 		MonMagasin.ajouterArticle(rArticle);
 		
-		File deletorLocationFiles = new File("Locations/");
-		if(deletorLocationFiles.exists())
-			deletorLocationFiles.delete();
+		File deletorLocationDirectory = new File("Locations");
+		if(deletorLocationDirectory.isDirectory()) {
+			if(deletorLocationDirectory.list().length == 0) {
+				deletorLocationDirectory.delete();
+			} else {
+				String sTab [] = deletorLocationDirectory.list();
+				for(String currentString : sTab) {
+					File deletorLocationFile = new File(deletorLocationDirectory, currentString);
+					deletorLocationFile.delete();
+				}
+				deletorLocationDirectory.delete();
+			}
+		}
 		
-		File deletorArchiveFiles = new File("Archives/");
-		if(deletorLocationFiles.exists())
-			deletorArchiveFiles.delete();
+		File deletorArchiveDirectory = new File("Archives/");
+		if(deletorArchiveDirectory.isDirectory()) {
+			if(deletorArchiveDirectory.list().length == 0) {
+				deletorArchiveDirectory.delete();
+			} else {
+				String sTab [] = deletorArchiveDirectory.list();
+				for(String currentString : sTab) {
+					File deletorArchiveFile = new File(deletorArchiveDirectory, currentString);
+					deletorArchiveFile.delete();
+				}
+				deletorArchiveDirectory.delete();
+			}
+		}
 	}
 	
 	public static int MenuPrincipal() {

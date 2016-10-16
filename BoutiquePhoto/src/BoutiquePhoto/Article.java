@@ -49,7 +49,6 @@ public class Article {
 	public int louer(Client pClient, int pNbArticleALoue, GregorianCalendar pDateFin) throws IOException
 	{
 		this.bNouvelleLocation = true;
-		
 		if(this.nNbStock > 0 && this.nNbStock-pNbArticleALoue >= 0)
 		{
 			GregorianCalendar gcCurrentDate = new GregorianCalendar();
@@ -73,7 +72,6 @@ public class Article {
 							this.nNbStock --;
 						}
 						currentLocation.setDateFin(pDateFin);
-						//currentLocation.setDateFin(pDateFin);
 						//on stocke les données dans le fichier texte
 						try
 						{

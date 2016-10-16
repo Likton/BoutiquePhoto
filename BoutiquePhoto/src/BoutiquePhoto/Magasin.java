@@ -88,7 +88,7 @@ public class Magasin {
 	{
 		System.out.println("Liste des locations du client : "+pClient.getsNom()+" | "+pClient.getuRef());
 		for(Location currentLocation : pClient.getlLocations()) {
-			if(currentLocation.getDateFin() == null) {
+			if(currentLocation.getDateFinReelle() == null) {
 				System.out.println("Location du : "+currentLocation.getDateDebut().getTime());
 				for(Article currentArticle : currentLocation.getlArticles()) {
 					System.out.println("N° Ref : "+currentArticle.getnReference()+" | Nom : "+currentArticle.getsIntitule());
