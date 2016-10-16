@@ -52,12 +52,12 @@ public class Article {
 			for(Location currentLocation : pClient.getlLocations())
 			{	
 				//on regarde dans ces locations si l'heure actuelle serait la même qu'une des locations du client
-				if( currentLocation.getDateDebut().get(12) == gcCurrentDate.get(12))
+				if( currentLocation.getDateDebut().get(10) == gcCurrentDate.get(10))
 				{
 					//on regarde ensuite dans ces locations faites dans la même heure que l'heure actuelle, 
 					//s'il n'y a pas une location faite dans les 2 minutes qui ont précédé.
 					//si oui, on considère que l'article loué, s'ajoute à la liste des articles de la location courante
-					if(currentLocation.getDateDebut().get(13) > gcCurrentDate.get(13)-5)
+					if(currentLocation.getDateDebut().get(12) > gcCurrentDate.get(12)-2)
 					{
 						for(int i=0; i < pNbArticleALoue; i++)
 						{

@@ -4,6 +4,7 @@ package BoutiquePhoto;
 
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 import java.io.DataOutput;
@@ -71,14 +72,13 @@ public class Location {
 				sContenuFichier += currentArticle.getsIntitule() + " | ";
 				sContenuFichier += currentArticle.getdPrixParJour() + " \n";
 				MontantaFacturer += (currentArticle.getdPrixParJour());
-			}
-			
-			sContenuFichier += "Montant total : \n";
-			sContenuFichier += MontantaFacturer + " \n";
-			
+			}			
 			
 			sContenuFichier += "Date de debut : " + this.DateDebut.getTime() + " \n";
 			sContenuFichier += "Date de Fin : " + this.DateFin.getTime() + " \n";
+			
+			sContenuFichier += "Montant total : \n";
+			sContenuFichier += MontantaFacturer*(Math.abs(this.DateFin.get(Calendar.DAY_OF_YEAR)-this.DateDebut.get(Calendar.DAY_OF_YEAR)));
 			
 			FileWriter fwFichier = new FileWriter("Locations/"+sNomFichier+".loc");
 			fwFichier.write(sContenuFichier);
@@ -97,8 +97,15 @@ public class Location {
 	{
 		// Permet de récupérer l'année et le mois de la fin de la location
 		StringBuilder sbDate = new StringBuilder();
-		sbDate.append(this.DateFinReelle.get(1));
-		sbDate.append(this.DateFinReelle.get(2)+1);
+		sbDate.append(this.DateFinReelle.get(Calendar.YEAR));
+		String valueMonth =Integer.toString(this.DateFinReelle.get(Calendar.MONTH)+1);
+		String realValueMonth ="";
+		if(valueMonth.length() == 1) {
+			realValueMonth = "0"+valueMonth;
+		} else {
+			realValueMonth = Integer.toString(this.DateFinReelle.get(Calendar.MONTH)+1);
+		}
+		sbDate.append(realValueMonth);
 		String date = sbDate.toString();
 		File dossierArchive = new File("Archives");
 		if(!dossierArchive.exists()) {
@@ -135,44 +142,24 @@ public class Location {
 		double montantTotal = 0;
 		long nbJour = differenceDate(pLocation.getDateDebut().getTime(), pLocation.getDateFin().getTime());
 		System.out.println(nbJour);
-		String infoLoc = pLocation.getuReference()+" "+pLocation.getDateDebut().getTime()+" "+pLocation.getDateFinReelle().getTime();
-		infoLoc+=" "+pClient.getsNom();
-		for(Article currentArticle : pLocation.getlArticles()) {
-			infoLoc+=" "+currentArticle.getnReference()
-				+" "+currentArticle.getsIntitule()
-				+" "+currentArticle.getdPrixParJour();
-			montantTotal += nbJour*currentArticle.getdPrixParJour();
-		}
-		infoLoc+=" "+montantTotal;
+		String infoLoc = pLocation.getuReference()+" "+pLoion.getDateDebut().getTime()+" "+pLocation.getDateFinReelle().getTime();
+		infoLoc+=" "		long nbJour = differenceDate(pLocation.getDateDebut(), pLocation.getDateFinReelle());
+tArticle.getnRefe		String infoLoc = pLocation.getuReference()+","+pLocation.getDateDebut().getTime()+","+pLocation.getDateFinReelle().getTime();
+		infoLoc+=","+pClient.getsNom();
+oLoc+=" "+montantTotal;
 		infoLoc+="\n";
-		return infoLoc;
-	}
-	
-	/*
-	 * fonction auxilliaire permettant d'obtenir le nombre de jour séparant deux dates
-	 */
-	private long differenceDate(Date pGc1, Date pGc2) {
-		long dureeJour = 1000l * 60 * 60 * 24;
-		//long date1 = pGc1.getTime().getTime();
+		return infoLoc;			infoLoc+=","+currentArticle.getnReference()
+				+","+currentArticle.getsIntitule()
+				+","+currentArticle.getdPrixParJour();
+e(Date pGc1, Date pGc2) {
+		long dureeJour = 1000l * 60 * 60 * 24		infoLoc+=","+montantTotal;
+me().getTime();
 		//long date2 = pGc2.getTime().getTime();
-		//GregorianCalendar gc1 = new GregorianCalendar(pGc1.get(pGc1.YEAR), pGc1.get(pGc1.MONTH), pGc1.get(pGc1.DATE));
-		//GregorianCalendar gc2 = new GregorianCalendar(pGc2.get(pGc2.YEAR), pGc2.get(pGc2.MONTH), pGc2.get(pGc2.DATE));
-		long difference = Math.abs(pGc1.getTime()-pGc2.getTime());
-		return (difference/dureeJour)+1;
-	}
-	
-	//accesseurs
-	
-	public GregorianCalendar getDateDebut() {
-		return this.DateDebut; 
-	}
-	public void setDateDebut(GregorianCalendar dateDebut) {
-		DateDebut = dateDebut;
-	}
-	public GregorianCalendar getDateFin() {
-		return this.DateFin;
-	}
-	public void setDateFin(GregorianCalendar dateFin) {
+		//GregorianCalendar gc1 = new GregorianCalendar(pGc1.get(pGc1.YEAR), pGc1.get	private long differenceDate(GregorianCalendar pGc1, GregorianCalendar pGc2) {
+		int difference = 0;
+		difference = Math.abs(pGc1.get(Calendar.DAY_OF_YEAR)-pGc2.get(Calendar.DAY_OF_YEAR));
+		return difference+1;
+ic void setDateFin(GregorianCalendar dateFin) {
 		this.DateFin = dateFin;
 	}
 

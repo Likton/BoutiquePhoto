@@ -40,8 +40,6 @@ public class Client {
 		this.lLocations = new ArrayList<Location>();
 	}
 	
-	//méthodes	
-	
 	//accesseur
 	
 	public String getsNom() {

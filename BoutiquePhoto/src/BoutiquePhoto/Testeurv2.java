@@ -1,6 +1,10 @@
 package BoutiquePhoto;
 
+import java.io.IOException;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class Testeurv2 {
 	
@@ -30,6 +34,148 @@ public class Testeurv2 {
 		return choice;
 	}
 	
+	public void AjouterArticle() {
+		Scanner scanner = new Scanner(System.in);
+		Scanner scannerS = new Scanner(System.in);
+		System.out.println("Veuillez rentrer une référence pour l'article: ");
+		int Ref = scanner.nextInt();
+		
+		System.out.println("Veuillez rentrer une quantité pour cette référence: ");
+		int NbStock = scanner.nextInt();
+		
+		System.out.println("Veuillez rentrer une marque pour cet article: ");
+		String Marque = scannerS.nextLine();
+		
+		System.out.println("Veuillez rentrer un intitulé pour cet article: ");
+		String Intitule = scannerS.nextLine();
+		
+		System.out.println("Veuillez rentrer le prix par jour de cet article (double): ");
+		double Prix = scanner.nextDouble();
+		
+		System.out.println("Les types d'articles disponibles pour votre magasins sont les suivants: \n");
+		int ChoixType = 0;
+		boolean bChoixType = true;
+		
+		while(bChoixType) {
+			
+			ChoixType = MenuChoixTypeArticle();
+			switch(ChoixType) {
+			
+			case 1:
+				Scanner scannerDA = new Scanner(System.in);
+				System.out.println("Veuillez renseigner une résolution: ");
+				String Res = scannerDA.nextLine();
+				System.out.println("Veuillez renseigner un nombre de Pixels: ");
+				int NbPixels = scannerDA.nextInt();
+				DispositifAcquisition daArticle = new DispositifAcquisition(Ref, NbStock, Marque, Intitule, Prix, NbPixels, Res);
+				MonMagasin.ajouterArticle(daArticle);
+				bChoixType = false;
+				break;
+				
+			case 2:
+				Scanner scannerFS = new Scanner(System.in);
+				System.out.println("Veuillez renseigner une taille (X):");
+				int fsTailleX = scannerFS.nextInt();
+				System.out.println("Veuillez renseigner une taille (Y):");
+				int fsTailleY = scannerFS.nextInt();
+				FondStudio fsArticle = new FondStudio(Ref, NbStock, Marque, Intitule, Prix, fsTailleX, fsTailleY);
+				MonMagasin.ajouterArticle(fsArticle);
+				bChoixType = false;
+				break;
+				
+			case 3:
+				MaterielTournageStabilisation mtsArticle = new MaterielTournageStabilisation(Ref, NbStock, Marque, Intitule, Prix);
+				MonMagasin.ajouterArticle(mtsArticle);
+				bChoixType = false;
+				break;
+				
+			case 4:
+				Scanner scannerMIC = new Scanner(System.in);
+				System.out.println("Veuillez renseigner une sensibilité (double): ");
+				double Sensi = scannerMIC.nextDouble();
+				System.out.println("Veuillez renseigner si le micro est filaire (boolean): ");
+				boolean Fil = scannerMIC.nextBoolean();
+				System.out.println("Veuillez renseigner l'autonomie du micro (double): ");
+				double Auto = scannerMIC.nextDouble();
+				Micro micArticle = new Micro(Ref, NbStock, Marque, Intitule, Prix, Sensi, Fil, Auto);
+				MonMagasin.ajouterArticle(micArticle);
+				bChoixType = false;
+				break;
+				
+			case 5:
+				System.out.println("Pas géré, choisissez un autre type d'article");
+				break;
+				
+			case 6:
+				Scanner scannerPLED = new Scanner(System.in);
+				System.out.println("Veuillez renseigner un nombre de Pixels: ");
+				int pledNbPixels = scannerPLED.nextInt();
+				PanneauLED pledArticle = new PanneauLED(Ref, NbStock, Marque, Intitule, Prix, pledNbPixels);
+				MonMagasin.ajouterArticle(pledArticle);
+				bChoixType = false;
+				break;
+				
+			case 7:			
+				Scanner scannerR = new Scanner(System.in);
+				System.out.println("Veuillez renseigner une taille (X):");
+				int rTailleX = scannerR.nextInt();
+				System.out.println("Veuillez renseigner une taille (Y):");
+				int rTailleY = scannerR.nextInt();
+				Reflecteur rArticle = new Reflecteur(Ref, NbStock, Marque, Intitule, Prix, rTailleX, rTailleY);
+				MonMagasin.ajouterArticle(rArticle);
+				bChoixType = false;
+				break;
+				
+			default:
+				break;
+			}
+		}
+	}
+	
+	public static int MenuChoixTypeArticle() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Veuillez en choisir un \n");
+		System.out.println("-Dispositif d'acquisition - tapez 1");
+		System.out.println("-Fond Studio - tapez 2");
+		System.out.println("-Materiel de tournage / Stabilisation - tapez 3");
+		System.out.println("-Micro - tapez 4");
+		System.out.println("-Objectif - tapez 5");
+		System.out.println("-Panneau LED - tapez 6");
+		System.out.println("-Réflecteur - tapez 7");
+		int choice = scanner.nextInt();
+		return choice;
+	}
+	
+	
+	public void SupprimerArticle() {
+		boolean bSupprimer = false;
+		int nIndexArticle = 0;
+		int nCompteur = 0;
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Veuillez rentrer la référence de l'article à supprimer: ");
+		int Ref = scanner.nextInt();
+		
+		for(Article currentArticle : MonMagasin.getlArticles()) {
+			if(Ref == currentArticle.getnReference()) {
+				bSupprimer = true;
+				nIndexArticle = nCompteur;
+			}
+			nCompteur ++;
+		}
+		if(bSupprimer)
+			MonMagasin.retirerArticle(MonMagasin.getlArticles().get(nIndexArticle));
+		
+		System.out.println("L'article a été supprimé");
+	}
+	
+	public void AfficherArticles() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Veuillez choisir le type de classement pour l'affichage des articles: ");
+		String sCompare = scanner.nextLine();
+		
+		MonMagasin.AfficherListeArticle(sCompare);
+	}
+	
 	public static int MenuGestionClients() {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("===Gestion des Clients===");
@@ -42,6 +188,61 @@ public class Testeurv2 {
 		return choice;
 	}
 	
+	public void AjouterClient() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Veuillez rentrer un nom de client: ");
+		String sNom = scanner.nextLine();
+		
+		System.out.println("Veuillez rentrer une adresse de client: ");
+		String sAdresse = scanner.nextLine();
+		
+		System.out.println("Veuillez rentrer un numéro de téléphone client: ");
+		String sNum = scanner.nextLine();
+		
+		Client Client = new Client(sNom, sAdresse, sNum);
+		MonMagasin.ajouterClient(Client);
+		System.out.println("Client : "+Client.getsNom()+" | "+Client.getsAdress()+" | "+Client.getsNum()+" | "+Client.getuRef()+" a été créé!");
+	}
+	
+	public void SupprimerClient() {
+		boolean bSupprimer = false;
+		int nIndexClient = 0;
+		int nCompteur = 0;
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Veuillez rentrer une référence de client: ");
+		String sUUID = scanner.nextLine();
+		
+		for(Client currentClient: MonMagasin.getlClients()) {
+			if(sUUID.compareTo(currentClient.getuRef().toString()) == 0) {
+				bSupprimer = true;
+				 nIndexClient = nCompteur;
+			}
+			nCompteur ++;
+		}
+		
+		if(bSupprimer) {
+			MonMagasin.supprimerClient(MonMagasin.getlClients().get(nIndexClient));
+		}
+	}
+	
+	public void AfficherClients() {
+		for(Client currentClient : MonMagasin.getlClients()) {
+			System.out.println("Nom du Client: "+currentClient.getsNom()+" | référence: "+currentClient.getuRef()+" \n");
+		}
+	}
+	
+	public void AfficherLocationsClient() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Veuillez rentrer une référence de client: ");
+		String sUUID = scanner.nextLine();
+
+		for(Client currentClient: MonMagasin.getlClients()) {
+			if(sUUID.compareTo(currentClient.getuRef().toString()) == 0) {
+				MonMagasin.AfficherLocationsEnCours(currentClient);
+			}
+		}
+	}
+	
 	public static int MenuGestionLocations() {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("===Gestion des Locations===");
@@ -50,6 +251,75 @@ public class Testeurv2 {
 		System.out.println("- Retour - tapez 9");
 		int choice = scanner.nextInt();
 		return choice;
+	}
+	
+	public void CreerLocation() throws IOException {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Veuillez rentrer une référence de client a qui attribuer la location: ");
+		String refClient = scanner.nextLine();
+		
+		System.out.println("Veuillez rentrer une référence d'article à louer: ");
+		int refArticle = scanner.nextInt();
+		
+		System.out.println("Veuillez rentrer la quantité voulue pour l'article à louer: ");
+		int quantite = scanner.nextInt();
+		
+		System.out.println("Veuillez rentrer une année de fin de location: ");
+		int annee = scanner.nextInt();
+		
+		System.out.println("Veuillez rentrer un mois de fin de location: ");
+		int mois = scanner.nextInt();
+		
+		System.out.println("Veuillez rentrer un jour de fin de location: ");
+		int jour = scanner.nextInt();
+		
+		for(Article currentArticle : MonMagasin.getlArticles()) {
+			if(refArticle == currentArticle.getnReference()) {
+				for(Client currentClient : MonMagasin.getlClients()) {
+					if(refClient.compareTo(currentClient.getuRef().toString()) == 0) {
+						currentArticle.louer(currentClient, quantite, new GregorianCalendar(annee, mois-1, jour));
+					}
+				}
+			}
+		}
+		System.out.println("Location créée");
+	}
+	
+	public void CloreLocation() throws IOException {
+		boolean bCloreLocation = false;
+		int nIndexArticle = 0;
+		int nIndexClient = 0;
+		int nCompteurArticle = 0;
+		int nCompteurClient = 0;
+		Scanner scanner = new Scanner(System.in);
+		Scanner scannerS = new Scanner(System.in);
+		System.out.println("Veuillez rentrer une référence d'article à rendre: ");
+		int refArticle = scanner.nextInt();
+		
+		for(Article currentArticle : MonMagasin.getlArticles()) {
+			if(refArticle == currentArticle.getnReference()) {
+				System.out.println("Cet article existe bien. Affichage des locations en cours...");
+				for(Client currentClient : MonMagasin.getlClients()) {
+					MonMagasin.AfficherLocationsEnCours(currentClient);
+				}
+				nIndexArticle = nCompteurArticle;
+				System.out.println("Veuillez rentrer la référence de client louant l'article à rendre: ");
+				String refClient = scannerS.nextLine();
+				
+				
+				for(Client currentClient : MonMagasin.getlClients()) {
+					if(refClient.compareTo(currentClient.getuRef().toString()) == 0) {
+						bCloreLocation = true;
+						nIndexClient = nCompteurClient;
+					}
+					nCompteurClient ++;
+				}
+			}
+			nCompteurArticle ++;
+		}
+		if(bCloreLocation)
+			MonMagasin.getlArticles().get(nIndexArticle).FinLocation(MonMagasin.getlClients().get(nIndexClient));
+		
 	}
 	
 	public static int MenuGestionRecettes() {
@@ -61,27 +331,8 @@ public class Testeurv2 {
 		return choice;
 	}
 	
-	public void AjouterClient() {
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Veuillez rentrer un nom de client : ");
-		String sNom = scanner.nextLine();
-		System.out.println("Veuillez rentrer une adresse de client: ");
-		String sAdresse = scanner.nextLine();
-		System.out.println("Veuillez rentrer un numéro de téléphone client: ");
-		String sNum = scanner.nextLine();
-		Client Client = new Client(sNom, sAdresse, sNum);
-		MonMagasin.ajouterClient(Client);
-		System.out.println("Client : "+Client.getsNom()+" | "+Client.getsAdress()+" | "+Client.getsNum()+" | "+Client.getuRef()+" a été créé!");
-	}
 	
-	public void AfficherClients() {
-		for(Client currentClient : MonMagasin.getlClients()) {
-			System.out.println("Nom du Client: "+currentClient.getsNom()+" | référence: "+currentClient.getuRef()+" | adresse: "+currentClient.getsAdress()+" | numéro: "+currentClient.getsNum()+" \n");
-		}
-	}
-	
-	
-	public static void main(String args[]) {
+	public static void main(String args[]) throws IOException {
 		
 		boolean bMain = true;
 		int userChoiceMP;
@@ -97,23 +348,27 @@ public class Testeurv2 {
 		Testeurv2 testeur = new Testeurv2();
 		
 		while(bMain) {
-			
+			bMain = true;
 			userChoiceMP = MenuPrincipal();
 			
 			switch(userChoiceMP) {
 			
 			case 1:
+				bArticles = true;
 				while(bArticles) {
 					userChoiceMGA = MenuGestionArticles();
 					switch(userChoiceMGA) {
 					
 					case 1:
+						testeur.AjouterArticle();
 						break;
 						
 					case 2:
+						testeur.SupprimerArticle();
 						break;
 						
 					case 3:
+						testeur.AfficherArticles();
 						break;
 						
 					case 9:
@@ -129,6 +384,7 @@ public class Testeurv2 {
 				break;
 				
 			case 2:
+				bClients = true;
 				while(bClients) {
 					userChoiceMGC = MenuGestionClients();
 					switch(userChoiceMGC) {
@@ -138,13 +394,15 @@ public class Testeurv2 {
 						break;
 						
 					case 2:
+						testeur.SupprimerClient();
 						break;
 						
 					case 3:
 						testeur.AfficherClients();
 						break;
 						
-					case 4:	
+					case 4:
+						testeur.AfficherLocationsClient();
 						break;
 						
 					case 9:
@@ -159,14 +417,17 @@ public class Testeurv2 {
 				break;
 				
 			case 3:
+				bLocations = true;
 				while(bLocations) {
 					userChoiceMGL = MenuGestionLocations();
 					switch(userChoiceMGL) {
 					
 					case 1:
+						testeur.CreerLocation();
 						break;
 						
 					case 2:
+						testeur.CloreLocation();
 						break;
 						
 					case 9:
@@ -181,6 +442,7 @@ public class Testeurv2 {
 				break;
 				
 			case 4:
+				bRecettes = true;
 				while(bRecettes) {
 					userChoiceMGR = MenuGestionRecettes();
 					switch(userChoiceMGR) {
