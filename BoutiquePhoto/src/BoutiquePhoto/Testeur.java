@@ -70,7 +70,7 @@ public class Testeur {
 		} catch(Exception e) {
 			
 		}*/
-		System.out.println(Casto.calculerMontant(new GregorianCalendar(2016,9,1),new GregorianCalendar(2017,0,1)));
+		System.out.println(Casto.calculerMontant(new GregorianCalendar(2016,9,1),new GregorianCalendar(2017,9,1)));
 		
 	}
 
