@@ -1,4 +1,8 @@
 package BoutiquePhoto;
+/**
+ * @author Guitton Lucas
+ * @author Chardenal Matthieu
+ */
 
 import java.util.ArrayList;
 import java.util.UUID;

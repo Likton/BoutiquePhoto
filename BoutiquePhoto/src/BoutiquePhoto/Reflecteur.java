@@ -1,3 +1,8 @@
+/**
+ * @author Guitton Lucas
+ * @author Chardenal Matthieu
+ */
+
 package BoutiquePhoto;
 
 public class Reflecteur extends AccessoireLumiere {
