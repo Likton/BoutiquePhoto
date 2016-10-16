@@ -137,29 +137,45 @@ public class Location {
 	/*
 	 * Fonction auxilliaire permettant de créer la chaine de caractère à écrire dans le fichier d'archivage
 	 */
-	
 	private String builder(Location pLocation, Client pClient) {
 		double montantTotal = 0;
-		long nbJour = differenceDate(pLocation.getDateDebut().getTime(), pLocation.getDateFin().getTime());
+		long nbJour = differenceDate(pLocation.getDateDebut(), pLocation.getDateFinReelle());
 		System.out.println(nbJour);
-		String infoLoc = pLocation.getuReference()+" "+pLoion.getDateDebut().getTime()+" "+pLocation.getDateFinReelle().getTime();
-		infoLoc+=" "		long nbJour = differenceDate(pLocation.getDateDebut(), pLocation.getDateFinReelle());
-tArticle.getnRefe		String infoLoc = pLocation.getuReference()+","+pLocation.getDateDebut().getTime()+","+pLocation.getDateFinReelle().getTime();
+		String infoLoc = pLocation.getuReference()+","+pLocation.getDateDebut().getTime()+","+pLocation.getDateFinReelle().getTime();
 		infoLoc+=","+pClient.getsNom();
-oLoc+=" "+montantTotal;
-		infoLoc+="\n";
-		return infoLoc;			infoLoc+=","+currentArticle.getnReference()
+		for(Article currentArticle : pLocation.getlArticles()) {
+			infoLoc+=","+currentArticle.getnReference()
 				+","+currentArticle.getsIntitule()
 				+","+currentArticle.getdPrixParJour();
-e(Date pGc1, Date pGc2) {
-		long dureeJour = 1000l * 60 * 60 * 24		infoLoc+=","+montantTotal;
-me().getTime();
-		//long date2 = pGc2.getTime().getTime();
-		//GregorianCalendar gc1 = new GregorianCalendar(pGc1.get(pGc1.YEAR), pGc1.get	private long differenceDate(GregorianCalendar pGc1, GregorianCalendar pGc2) {
+			montantTotal += nbJour*currentArticle.getdPrixParJour();
+		}
+		infoLoc+=","+montantTotal;
+		infoLoc+="\n";
+
+		return infoLoc;
+	}
+	
+	/*
+	 * fonction auxilliaire permettant d'obtenir le nombre de jour séparant deux dates
+	 */
+	private long differenceDate(GregorianCalendar pGc1, GregorianCalendar pGc2) {
 		int difference = 0;
 		difference = Math.abs(pGc1.get(Calendar.DAY_OF_YEAR)-pGc2.get(Calendar.DAY_OF_YEAR));
 		return difference+1;
-ic void setDateFin(GregorianCalendar dateFin) {
+	}
+	
+	//accesseurs
+	
+	public GregorianCalendar getDateDebut() {
+		return this.DateDebut; 
+	}
+	public void setDateDebut(GregorianCalendar dateDebut) {
+		DateDebut = dateDebut;
+	}
+	public GregorianCalendar getDateFin() {
+		return this.DateFin;
+	}
+	public void setDateFin(GregorianCalendar dateFin) {
 		this.DateFin = dateFin;
 	}
 
