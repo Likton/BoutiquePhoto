@@ -33,8 +33,17 @@ public class Micro extends Article {
 		this.dAutonomie = dAutonomie;
 	}
 	
-	// Constructeur
-	
+	/**
+	 * Constructeur	
+	 * @param pReference
+	 * @param pNbStock
+	 * @param pMarque
+	 * @param pIntitule
+	 * @param pPrixParJour
+	 * @param pSensibilite
+	 * @param pTypeFilaire
+	 * @param pAutomonie
+	 */
 	public Micro(int pReference, int pNbStock, String pMarque, String pIntitule, double pPrixParJour,
 			double pSensibilite, boolean pTypeFilaire, double pAutomonie) {
 		super(pReference, pNbStock, pMarque, pIntitule, pPrixParJour);

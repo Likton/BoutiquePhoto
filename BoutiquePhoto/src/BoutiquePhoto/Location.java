@@ -5,9 +5,7 @@ package BoutiquePhoto;
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.UUID;
-import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -25,8 +23,9 @@ public class Location {
 	
 	private ArrayList<Article> lArticles;
 	
-	/*
+	/**
 	 * Constructeur
+	 * @param pCalendar
 	 */
 	public Location (GregorianCalendar pCalendar)
 	{
@@ -39,7 +38,12 @@ public class Location {
 	
 	
 	//méthodes
-	
+	/**
+	 * Description : Enregistre la location dans un fichier .loc au format texte, lisible par le gérant du magasin
+	 * A faire: Le fichier doit pouvoir être édité, si une location est simplement modifiée (pas de new loc)
+	 * @param pClient
+	 * @throws IOException
+	 */
 	public void EnregistrerLocation(Client pClient) throws IOException
 	{
 		String sNomFichier = "";
@@ -74,11 +78,11 @@ public class Location {
 				MontantaFacturer += (currentArticle.getdPrixParJour());
 			}			
 			
+			sContenuFichier += "Montant total : \n";
+			sContenuFichier += MontantaFacturer*(Math.abs(this.DateFin.get(Calendar.DAY_OF_YEAR)-this.DateDebut.get(Calendar.DAY_OF_YEAR)))+" \n";
+			
 			sContenuFichier += "Date de debut : " + this.DateDebut.getTime() + " \n";
 			sContenuFichier += "Date de Fin : " + this.DateFin.getTime() + " \n";
-			
-			sContenuFichier += "Montant total : \n";
-			sContenuFichier += MontantaFacturer*(Math.abs(this.DateFin.get(Calendar.DAY_OF_YEAR)-this.DateDebut.get(Calendar.DAY_OF_YEAR)));
 			
 			FileWriter fwFichier = new FileWriter("Locations/"+sNomFichier+".loc");
 			fwFichier.write(sContenuFichier);
@@ -88,11 +92,36 @@ public class Location {
 		
 	}
 	
-	public void ModifierLocation(Client pClient)
-	{
+	/**
+	 * Description: Cette méthode permet l'édition du fichier de loc, pour inscrire la date de fin réelle, et mettre en conséquence le montant réel à payé.
+	 * A faire: doit pouvoir gérer l'affiliation à une autre location
+	 * @param pClient
+	 * @throws IOException
+	 */
+	public void ModifierLocation(Client pClient) throws IOException {
+		String sNomFichier = "";
+		String sContenuFichier = "";
+		double MontantaFacturer = 0.0;
 		
+		sNomFichier += this.uReference+ "-"+ pClient.getsNom();
+
+		FileWriter fwModifFichier = new FileWriter("Location/"+sNomFichier+".loc", true);
+		
+		sContenuFichier += "Date de Fin réelle : " + this.DateFinReelle.getTime() + " \n";
+		for(Article currentArticle : this.getlArticles())
+		{
+			MontantaFacturer += (currentArticle.getdPrixParJour());
+		}
+		sContenuFichier += "Montant total à payer: "+MontantaFacturer*(Math.abs(this.DateFinReelle.get(Calendar.DAY_OF_YEAR)-this.DateDebut.get(Calendar.DAY_OF_YEAR)));
+		fwModifFichier.write(sContenuFichier);
+		fwModifFichier.close();
 	}
 	
+	/**
+	 * Desciption: Archive les données d'une location, dans un fichier de location qui rassemble toutes les locations du même mois
+	 * @param pClient
+	 * @throws IOException
+	 */
 	public void archiverDonnees(Client pClient) throws IOException
 	{
 		// Permet de récupérer l'année et le mois de la fin de la location
@@ -123,8 +152,12 @@ public class Location {
 		}
 	}
 	
-	/*
-	 * fonction auxilliaire permettant l'écriture des informations de la location dans un fichier
+	/**
+	 * Description: fonction auxilliaire permettant l'écriture des informations de la location dans un fichier
+	 * @param pFile
+	 * @param tab
+	 * @param pAppend
+	 * @throws IOException
 	 */
 	private void stockerChar(File pFile,  char[] tab, boolean pAppend) throws IOException {
 		DataOutputStream fluxSortieBinaire = new DataOutputStream(new FileOutputStream(pFile,pAppend));
@@ -134,8 +167,11 @@ public class Location {
 		fluxSortieBinaire.close();
 	}
 	
-	/*
-	 * Fonction auxilliaire permettant de créer la chaine de caractère à écrire dans le fichier d'archivage
+	/**
+	 * Description: Fonction auxilliaire permettant de créer la chaine de caractère à écrire dans le fichier d'archivage
+	 * @param pLocation
+	 * @param pClient
+	 * @return
 	 */
 	private String builder(Location pLocation, Client pClient) {
 		double montantTotal = 0;
@@ -155,14 +191,18 @@ public class Location {
 		return infoLoc;
 	}
 	
-	/*
-	 * fonction auxilliaire permettant d'obtenir le nombre de jour séparant deux dates
+	/**
+	 * Description: fonction auxilliaire permettant d'obtenir le nombre de jour séparant deux dates
+	 * @param pGc1
+	 * @param pGc2
+	 * @return
 	 */
 	private long differenceDate(GregorianCalendar pGc1, GregorianCalendar pGc2) {
 		int difference = 0;
 		difference = Math.abs(pGc1.get(Calendar.DAY_OF_YEAR)-pGc2.get(Calendar.DAY_OF_YEAR));
 		return difference+1;
 	}
+	
 	
 	//accesseurs
 	

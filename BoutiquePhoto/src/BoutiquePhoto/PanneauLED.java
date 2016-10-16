@@ -15,8 +15,15 @@ public class PanneauLED extends AccessoireLumiere {
 		this.nNbLED = nNbLED;
 	}
 	
-	// Constructeur
-	
+	/**
+	 * Constructeur	
+	 * @param pReference
+	 * @param pNbStock
+	 * @param pMarque
+	 * @param pIntitule
+	 * @param pPrixParJour
+	 * @param pNbLED
+	 */
 	public PanneauLED(int pReference, int pNbStock, String pMarque, String pIntitule, double pPrixParJour,
 			int pNbLED) {
 		super(pReference, pNbStock, pMarque, pIntitule, pPrixParJour);

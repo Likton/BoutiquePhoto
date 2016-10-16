@@ -15,8 +15,13 @@ public class Article {
 	private double dPrixParJour;
 	private boolean bNouvelleLocation;
 		
-	/*
-	 * Constructeur paramétré pour initialisé les attributs généraux
+	/**
+	 * Constructeur
+	 * @param pReference
+	 * @param pNbStock
+	 * @param pMarque
+	 * @param pIntitule
+	 * @param pPrixParJour
 	 */
 	public Article(int pReference, int pNbStock, String pMarque, String pIntitule, double pPrixParJour)
 	{
@@ -32,11 +37,14 @@ public class Article {
 	
 	//méthodes
 	
-	/*
-	 * @function louer(Client pClient)
-	 * @Param Client pClient
-	 * @return boolean
-	 * @Resume Location d'un article pour un client donné. La disponibilité passe à false pour cet article. Une location est crée à la date de location 
+	/**
+	 * Description: Méthode gérant le système de location d'un article pour un client donné. Gère les capacités du magasin
+	 * ainsi que les dates nécessaires pour l'archivage des données.
+	 * @param pClient
+	 * @param pNbArticleALoue
+	 * @param pDateFin
+	 * @return
+	 * @throws IOException
 	 */
 	public int louer(Client pClient, int pNbArticleALoue, GregorianCalendar pDateFin) throws IOException
 	{
@@ -111,11 +119,11 @@ public class Article {
 	}
 	
 	
-	/*
-	 * @function RendreArticle(Client pClient)
-	 * @Param Client pClient
-	 * @return boolean
-	 * @Resume fin de location d'un article pour un client donné. La disponibilité passe à true pour cet article. 
+	/**
+	 * Description: Méthode gérant la restitution des articles du magasin, simplement en prenant en compte le client.
+	 * @param pClient
+	 * @return
+	 * @throws IOException
 	 */
 	public int FinLocation(Client pClient) throws IOException
 	{
@@ -166,6 +174,10 @@ public class Article {
 		return this.nNbStock;
 	}
 	
+	/**
+	 * Description: Fonction auxiliaire permettant de gérer après une restitution de matériel, le nouveau stock.
+	 * @param pLocation
+	 */
 	public void RemettreStockArticles(Location pLocation)
 	{
 		for(int i=0; i < pLocation.getlArticles().size(); i++)

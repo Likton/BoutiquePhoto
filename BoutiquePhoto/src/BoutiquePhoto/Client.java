@@ -13,7 +13,9 @@ public class Client {
 	private ArrayList<Location> lLocations;	
 	
 	
-	//Constructeurs
+	/**
+	 * Constructeur non-paramétré
+	 */
 	public Client()
 	{
 		this.setuRef(UUID.randomUUID());
@@ -23,6 +25,10 @@ public class Client {
 		this.lLocations = new ArrayList<Location>();		
 	}
 	
+	/**
+	 * Constructeur paramètré faible
+	 * @param pNom
+	 */
 	public Client(String pNom)
 	{
 		this.setuRef(UUID.randomUUID());
@@ -32,6 +38,12 @@ public class Client {
 		this.sNum = "";
 	}
 	
+	/**
+	 * Constructeur paramétré complet
+	 * @param pNom
+	 * @param pAdress
+	 * @param pNum
+	 */
 	public Client(String pNom, String pAdress, String pNum) {
 		this.setuRef(UUID.randomUUID());
 		this.sNom = pNom;

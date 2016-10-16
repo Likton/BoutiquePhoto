@@ -1,7 +1,6 @@
 package BoutiquePhoto;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,10 +8,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.GregorianCalendar;
-import java.util.StringTokenizer;
-
-import com.sun.javafx.property.adapter.ReadOnlyPropertyDescriptor.ReadOnlyListener;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class Magasin {
 
@@ -51,8 +46,11 @@ public class Magasin {
 		this.lArticles = lArticles;
 	}
 	
-	// Constructeur
-	
+	/**
+	 * Constructeur
+	 * @param pNom
+	 * @param pNomGerant
+	 */
 	public Magasin(String pNom, String pNomGerant) {
 		this.sNom = pNom;
 		this.sNomGerant = pNomGerant;
@@ -62,9 +60,6 @@ public class Magasin {
 	
 	//méthodes
 	
-	/*
-	 * Permet d'ajouter un article disponible dans le magasin
-	 */
 	public void ajouterArticle(Article pArticle) {
 		if(pArticle.getnNbStock() > 0) {
 			this.lArticles.add(pArticle);
@@ -73,9 +68,6 @@ public class Magasin {
 		}
 	}
 	
-	/*
-	 * Permet de retirer un article du magasin
-	 */
 	public void retirerArticle(Article pArticle) {
 		this.lArticles.remove(pArticle);
 	}
@@ -88,8 +80,9 @@ public class Magasin {
 		this.lClients.remove(pClient);
 	}
 	
-	/*
-	 * Permet d'afficher la liste des articles loué par un client passé en parametre
+	/**
+	 * Description: Permet d'afficher la liste des articles loué par un client passé en parametre
+	 * @param pClient
 	 */
 	public void AfficherLocationsEnCours(Client pClient) 
 	{
@@ -105,9 +98,10 @@ public class Magasin {
 		System.out.println();
 	}
 	
-	/*
-	 * Permet d'afficher la liste des articles du magasin en location trié soit par référence, marque, intitulé ou prix par jour de location
-	 * (passé en paramètre) 
+	/**
+	 * Description: Permet d'afficher la liste des articles du magasin en location trié soit par référence, marque, intitulé ou prix par jour de location
+	 * (passé en paramètre)
+	 * @param pCompare
 	 */
 	public void AfficherListeArticle(String pCompare) {
 		switch (pCompare) {
@@ -143,8 +137,12 @@ public class Magasin {
 		
 	}
 	
-	/*
-	 * Permet de calculer le montant des recettes de toutes les locations compris entre une période donnée
+	/**
+	 * Description: Permet de calculer le montant des recettes de toutes les locations compris entre une période donnée
+	 * @param pGcDebut
+	 * @param pGcFin
+	 * @return
+	 * @throws IOException
 	 */
 	public double calculerMontant(GregorianCalendar pGcDebut, GregorianCalendar pGcFin) throws IOException{
 		double montantTotal = 0;
@@ -165,9 +163,7 @@ public class Magasin {
 			}
 			lGc.add(currentGc);
 		}
-		for(GregorianCalendar current : lGc) {
-			System.out.println(current.getTime());
-		}
+		
 		for(GregorianCalendar current : lGc) {
 			// permet d'obtenir l'année et le mois sous un format "yyyyMM"
 			StringBuilder sbDate = new StringBuilder();
@@ -207,8 +203,11 @@ public class Magasin {
 		return montantTotal;
 	}
 	
-	/*
-	 * méthode auxilliaire permettant de connaitre le nombre de mois séparant deux dates
+	/**
+	 * Description: méthode auxilliaire permettant de connaitre le nombre de mois séparant deux dates
+	 * @param pGc1
+	 * @param pGc2
+	 * @return
 	 */
 	private static long differenceMois(GregorianCalendar pGc1, GregorianCalendar pGc2) {
 		// durée d'un mois en millisecondes

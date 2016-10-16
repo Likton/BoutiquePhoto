@@ -3,8 +3,6 @@ package BoutiquePhoto;
 import java.io.IOException;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class Testeurv2 {
 	
@@ -331,6 +329,21 @@ public class Testeurv2 {
 		return choice;
 	}
 	
+	public void AfficherRecettes() throws IOException {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Veuillez rentrer une année: ");
+		int AnneeDeb = scanner.nextInt();
+		System.out.println("Veuillez rentrer un mois: ");
+		int MoisDeb = scanner.nextInt();
+		System.out.println("Veuillez rentrer une année de fin: ");
+		int AnneeFin = scanner.nextInt();
+		System.out.println("Veuillez rentrer une année de début: ");
+		int MoisFin = scanner.nextInt();
+		
+		System.out.println(MonMagasin.calculerMontant(new GregorianCalendar(AnneeDeb, MoisDeb-1, 1), new GregorianCalendar(AnneeFin, MoisFin-1, 1)));
+		
+	}
+	
 	
 	public static void main(String args[]) throws IOException {
 		
@@ -448,6 +461,7 @@ public class Testeurv2 {
 					switch(userChoiceMGR) {
 					
 					case 1:
+						testeur.AfficherRecettes();
 						break;
 						
 					case 9:

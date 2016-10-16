@@ -5,6 +5,16 @@ public class DispositifAcquisition extends Article{
 	private int nNbPixels;
 	private String sResolution;
 	
+	/**
+	 * Constructeur
+	 * @param pReference
+	 * @param pNbStock
+	 * @param pMarque
+	 * @param pIntitule
+	 * @param pPrixParJour
+	 * @param pNbPixels
+	 * @param pResolution
+	 */
 	public DispositifAcquisition(int pReference, int pNbStock, String pMarque, String pIntitule, double pPrixParJour,
 			int pNbPixels, String pResolution) {
 		super(pReference, pNbStock, pMarque, pIntitule, pPrixParJour);
@@ -12,6 +22,8 @@ public class DispositifAcquisition extends Article{
 		this.setsResolution(pResolution);
 	}
 
+	//accesseurs
+	
 	public int getnNbPixels() {
 		return nNbPixels;
 	}
