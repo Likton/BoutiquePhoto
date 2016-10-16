@@ -1,5 +1,6 @@
 package BoutiquePhoto;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
@@ -8,6 +9,37 @@ public class Testeurv2 {
 	
 	Magasin MonMagasin = new Magasin("MonMagasin","Moi");
 	
+	Client Lucas = new Client("Lucas", "32 rue Morray", "55-64-76");
+	Client Matthieu = new Client("Matthieu", "123 rue de paul Berléan", "24-24-24");
+	Client Prof = new Client("Audrey Queudet", "IUT de Nantes", "0216448979");
+	
+	DispositifAcquisition daArticle = new DispositifAcquisition(123, 123, "Sony", "Camera20MPX", 123.0, 123, "123");
+	FondStudio fsArticle = new FondStudio(456, 1, "Phillips", "FondStudioWide", 456, 520, 740);
+	MaterielTournageStabilisation mtsArticle = new MaterielTournageStabilisation(789, 2, "Panasonic", "Trépied", 12);
+	Micro micArticle = new Micro(147, 147, "Sony", "MIC16056", 147, 22.4, true, 48.8);
+	PanneauLED pledArticle = new PanneauLED(258, 3, "Phillips", "PanneauLED512", 258, 512);
+	Reflecteur rArticle = new Reflecteur(369, 4, "Panasonic", "RéflecteurPhotoWide", 369, 128, 256);
+	
+	public void Initialisation() {
+		MonMagasin.ajouterClient(Lucas);
+		MonMagasin.ajouterClient(Matthieu);
+		MonMagasin.ajouterClient(Prof);
+		
+		MonMagasin.ajouterArticle(daArticle);
+		MonMagasin.ajouterArticle(fsArticle);
+		MonMagasin.ajouterArticle(mtsArticle);
+		MonMagasin.ajouterArticle(micArticle);
+		MonMagasin.ajouterArticle(pledArticle);
+		MonMagasin.ajouterArticle(rArticle);
+		
+		File deletorLocationFiles = new File("Locations/");
+		if(deletorLocationFiles.exists())
+			deletorLocationFiles.delete();
+		
+		File deletorArchiveFiles = new File("Archives/");
+		if(deletorLocationFiles.exists())
+			deletorArchiveFiles.delete();
+	}
 	
 	public static int MenuPrincipal() {
 		Scanner scanner = new Scanner(System.in);
@@ -225,7 +257,7 @@ public class Testeurv2 {
 	
 	public void AfficherClients() {
 		for(Client currentClient : MonMagasin.getlClients()) {
-			System.out.println("Nom du Client: "+currentClient.getsNom()+" | référence: "+currentClient.getuRef()+" \n");
+			System.out.println("Nom du Client: "+currentClient.getsNom()+" | Adresse: "+currentClient.getsAdress()+" | Numéro: "+currentClient.getsNum()+" | référence: "+currentClient.getuRef()+" \n");
 		}
 	}
 	
@@ -359,6 +391,8 @@ public class Testeurv2 {
 		int userChoiceMGR;
 		
 		Testeurv2 testeur = new Testeurv2();
+		
+		testeur.Initialisation();
 		
 		while(bMain) {
 			bMain = true;
